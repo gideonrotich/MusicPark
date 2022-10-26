@@ -6,8 +6,11 @@ import com.google.gson.Gson
 import com.swayy.musicpark.data.local.converters.Converters
 import com.swayy.musicpark.data.local.db.NapsterDatabase
 import com.swayy.musicpark.data.remote.api.NapsterApi
+import com.swayy.musicpark.data.remote.repository.GetTrackDetailsRepositoryImpl
 import com.swayy.musicpark.data.remote.repository.TrackRepositoryImpl
+import com.swayy.musicpark.domain.repository.GetTrackDetailsRepository
 import com.swayy.musicpark.domain.repository.TrackRepository
+import com.swayy.musicpark.domain.use_cases.GetTrackDetailsUseCase
 import com.swayy.musicpark.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -58,6 +61,24 @@ object AppModule {
             napsterApi = napsterApi,
             trackDao = napsterDatabase.TrackDao()
         )
+    }
+
+    @Provides
+    @Singleton
+    fun providesTrackDetailsRepository(
+        napsterApi: NapsterApi
+    ): GetTrackDetailsRepository {
+        return GetTrackDetailsRepositoryImpl(
+            napsterApi = napsterApi
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetTrackDetailsUseCase(
+        getTrackRepository: GetTrackDetailsRepository
+    ): GetTrackDetailsUseCase {
+        return GetTrackDetailsUseCase(getTrackRepository)
     }
 
     @Singleton

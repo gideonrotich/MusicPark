@@ -1,5 +1,6 @@
 package com.swayy.musicpark.presentation.screens.tracks.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -15,8 +16,15 @@ import com.swayy.musicpark.R
 import com.swayy.musicpark.domain.models.Track
 
 @Composable
-fun TrackItem(track:Track){
-    Row(modifier = Modifier.fillMaxSize()) {
+fun TrackItem(
+    track:Track,
+    onItemClicked: (track : Track) -> Unit
+){
+    Row(
+        modifier = Modifier.fillMaxSize()
+            .clickable { onItemClicked(track) },
+
+    ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(text = track.name,
             fontSize = 16.sp)
@@ -24,7 +32,8 @@ fun TrackItem(track:Track){
                 fontSize = 16.sp)
             Divider(color = Color.Gray, thickness = 1.dp)
         }
-        Icon(painter = painterResource(id = R.drawable.ic_baseline_play_circle_filled_24), contentDescription = "",
+        Icon(painter = painterResource(id = R.drawable.ic_baseline_play_circle_filled_24),
+            contentDescription = "",
         modifier = Modifier.size(40.dp))
     }
 }
