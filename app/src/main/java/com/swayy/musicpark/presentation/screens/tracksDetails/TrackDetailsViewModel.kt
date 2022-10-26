@@ -25,7 +25,9 @@ class TrackDetailsViewModel @Inject constructor(
     val state: State<TrackDetailState> = _state
 
     init {
-        getTrackDetails("tra.704687851")
+        savedStateHandle.get<String>(Constants.TRACK_ID)?.let { trackId ->
+            getTrackDetails(trackId)
+        }
 
     }
 

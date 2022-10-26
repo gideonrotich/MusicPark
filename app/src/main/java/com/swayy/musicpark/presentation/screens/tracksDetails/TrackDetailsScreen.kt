@@ -46,6 +46,26 @@ fun TrackDetailsScreen(
         trackDetailsState.trackDetails.let { track->
             Log.d("DETAILS::"," $track")
 
+            SongScreenContent(
+                track = track,
+                isSongPlaying = true,
+                //imagePainter = I,
+                dominantColor = Color.Blue,
+                playbackProgress = 1F,
+                currentTime = "0:53",
+                totalTime = "5:14",
+                // playPauseIcon =,
+                yOffset = 2 ,
+                playOrToggleSong = { /*TODO*/ },
+                playNextSong = { /*TODO*/ },
+                playPreviousSong = { /*TODO*/ },
+                onSliderChange = {},
+                onSliderChangeFinished = { /*TODO*/ },
+                onRewind = { /*TODO*/ },
+                onForward = { /*TODO*/ }){
+
+            }
+
         }
 
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
@@ -55,25 +75,7 @@ fun TrackDetailsScreen(
             }
         }
 
-        SongScreenContent(
-            //track = track,
-            isSongPlaying = true,
-            //imagePainter = I,
-            dominantColor = Color.Blue,
-            playbackProgress = 1F,
-            currentTime = "0:53",
-            totalTime = "5:14",
-            // playPauseIcon =,
-            yOffset = 2 ,
-            playOrToggleSong = { /*TODO*/ },
-            playNextSong = { /*TODO*/ },
-            playPreviousSong = { /*TODO*/ },
-            onSliderChange = {},
-            onSliderChangeFinished = { /*TODO*/ },
-            onRewind = { /*TODO*/ },
-            onForward = { /*TODO*/ }) {
 
-        }
 
     }
 
@@ -84,7 +86,7 @@ fun TrackDetailsScreen(
 
 @Composable
 fun SongScreenContent(
-    //track: Track,
+    track: List<Track>,
     isSongPlaying: Boolean,
     //imagePainter: Painter,
     dominantColor: Color,
@@ -176,7 +178,7 @@ fun SongScreenContent(
                         }
 
                         Text(
-                            text = "track.name",
+                            text = track.forEach { it.albumName }.toString(),
                             style = MaterialTheme.typography.h5,
                             color = MaterialTheme.colors.onBackground,
                             maxLines = 1,
@@ -184,7 +186,7 @@ fun SongScreenContent(
                         )
 
                         Text(
-                            "track.albumName",
+                            text = track.forEach { it.artistName}.toString(),
                             style = MaterialTheme.typography.subtitle1,
                             color = MaterialTheme.colors.onBackground,
                             maxLines = 1,
