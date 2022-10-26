@@ -4,7 +4,7 @@ object Constants {
 
     const val BASE_URL = "http://api.napster.com/"
 
-    const val API_KEY = "YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4"
+    const val API_KEY = "ODBmMmI5MGUtZTJhYy00YmRjLTg4MDAtZjJiODZlNmE5ODgw"
 
     const val TRACK_ID = "id"
 

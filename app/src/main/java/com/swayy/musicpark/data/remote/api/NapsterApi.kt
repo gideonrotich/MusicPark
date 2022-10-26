@@ -17,6 +17,6 @@ interface NapsterApi {
     @GET("v2.2/tracks/{tra}")
     suspend fun getTrackDetails(
         @Path("tra") trackId : String,
-        @Query("apiKey")apikey: String = Constants.API_KEY
+        @Query("apikey")apikey: String = Constants.API_KEY
     ) : TrackResponseDto
 }
