@@ -10,8 +10,6 @@ import com.swayy.musicpark.domain.use_cases.GetTrackDetailsUseCase
 import com.swayy.musicpark.util.Constants
 import com.swayy.musicpark.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
