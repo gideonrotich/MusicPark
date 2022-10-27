@@ -32,12 +32,14 @@ fun TrackItem(
     track: Track,
     onItemClicked: (track: Track) -> Unit
 ) {
-    Box(modifier = Modifier.padding(0.dp).clickable { onItemClicked(track) }) {
+    Box(modifier = Modifier.padding(0.dp)) {
         Column {
             Card(
                 modifier = Modifier
                     .size(170.dp)
                     .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 10.dp)
+                    .clickable { onItemClicked(track) },
+                elevation = 2.dp
             ) {
                 Box {
                     AsyncImage(
@@ -61,7 +63,6 @@ fun TrackItem(
                         )
 
                     }
-
                 }
 
             }

@@ -10,7 +10,7 @@ interface NapsterApi {
 
     @GET("v2.2/tracks/top")
     suspend fun getTracks(
-        @Query("range")range:String = "week",
+        @Query("range")range:String = "day",
         @Query("apikey")apikey:String = Constants.API_KEY
     ): TrackResponseDto
 
