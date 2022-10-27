@@ -2,6 +2,6 @@
 <resources>
 
     <style name="Theme.MusicPark" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:statusBarColor">#1C2C64</item>
     </style>
 </resources>
