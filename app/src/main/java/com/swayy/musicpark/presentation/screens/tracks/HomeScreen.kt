@@ -1,13 +1,14 @@
 package com.swayy.musicpark.presentation.screens.tracks
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ListItem
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -27,15 +28,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.swayy.musicpark.R
 import com.swayy.musicpark.presentation.Screen
+import com.swayy.musicpark.presentation.screens.artist.ArtistViewModel
+import com.swayy.musicpark.presentation.screens.artist.components.ArtistItem
+import com.swayy.musicpark.presentation.screens.posts.PostViewModel
+import com.swayy.musicpark.presentation.screens.posts.components.PostItem
 import com.swayy.musicpark.presentation.screens.tracks.components.TopBar
 import com.swayy.musicpark.presentation.screens.tracks.components.TrackItem
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    trackViewModel: TrackViewModel = hiltViewModel()
+    trackViewModel: TrackViewModel = hiltViewModel(),
+    postViewModel: PostViewModel = hiltViewModel(),
+    artistViewModel: ArtistViewModel = hiltViewModel()
 ) {
     val trackState = trackViewModel.state.value
+    val postState = postViewModel.state.value
+    val artistState = artistViewModel.state.value
     val context = LocalContext.current
 
     Box(
@@ -46,11 +55,17 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .scrollable(
+                    state = rememberScrollState(),
+                    enabled = true,
+                    orientation = Orientation.Vertical
+                )
         ) {
+
             TopBar()
             Row(horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(
-                    text = "Popular Pop Tracks",
+                    text = "Recommended",
                     color = Color.White,
                     fontSize = 18.sp,
                     modifier = Modifier.padding(top = 0.dp, start = 20.dp),
@@ -76,6 +91,44 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .padding(start = 4.dp, top = 6.dp)
             ) {
+                items(postState.posts) { posts ->
+                    PostItem(
+                        navController = navController,
+                        post = posts,
+                        onItemClicked = {
+
+                        }
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(
+                    text = "Popular Pop Tracks",
+                    color = Color.White,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(top = 0.dp, start = 20.dp),
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.SansSerif
+                )
+                Spacer(modifier = Modifier.weight(2.4f))
+                Image(
+                    painter = painterResource(id = R.drawable.ic_baseline_keyboard_arrow_right_24),
+                    contentDescription = "arrow",
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .size(28.dp)
+                        .clickable { navController.navigate(Screen.AllTracks.route) },
+                    colorFilter = ColorFilter.tint(Color.Gray)
+
+                )
+                Spacer(modifier = Modifier.weight(0.3f))
+            }
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 4.dp, top = 6.dp)
+            ) {
                 items(trackState.tracks) { tracks ->
                     TrackItem(
                         navController = navController,
@@ -86,6 +139,7 @@ fun HomeScreen(
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(10.dp))
             Row(horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(
                     text = "Popular Pop Artists",
@@ -113,49 +167,12 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .padding(start = 4.dp, top = 6.dp)
             ) {
-                items(trackState.tracks) { tracks ->
-                    TrackItem(
+                items(artistState.artists) { artists ->
+                    ArtistItem(
                         navController = navController,
-                        track = tracks,
+                        artist = artists,
                         onItemClicked = {
-                            navController.navigate(Screen.TrackDetails.route + "/${tracks.id}")
-                        }
-                    )
-                }
-            }
-            Row(horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(
-                    text = "Best New Releases",
-                    color = Color.White,
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(top = 0.dp, start = 20.dp),
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.SansSerif
-                )
-                Spacer(modifier = Modifier.weight(2.4f))
-                Image(
-                    painter = painterResource(id = R.drawable.ic_baseline_keyboard_arrow_right_24),
-                    contentDescription = "arrow",
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .size(28.dp)
-                        .clickable { navController.navigate(Screen.AllTracks.route) },
-                    colorFilter = ColorFilter.tint(Color.Gray)
 
-                )
-                Spacer(modifier = Modifier.weight(0.3f))
-            }
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 4.dp, top = 6.dp)
-            ) {
-                items(trackState.tracks) { tracks ->
-                    TrackItem(
-                        navController = navController,
-                        track = tracks,
-                        onItemClicked = {
-                            navController.navigate(Screen.TrackDetails.route + "/${tracks.id}")
                         }
                     )
                 }
