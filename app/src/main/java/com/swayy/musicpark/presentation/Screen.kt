@@ -18,4 +18,5 @@ package com.swayy.musicpark.presentation
 sealed class Screen(val route: String) {
     object HomeScreen : Screen("home_screen")
     object TrackDetails : Screen("track_details_screen")
+    object AllTracks:Screen("all_tracks")
 }

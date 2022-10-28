@@ -2,6 +2,7 @@ package com.swayy.musicpark.presentation.screens.tracks
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -62,7 +63,8 @@ fun HomeScreen(
                     contentDescription = "arrow",
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .size(28.dp),
+                        .size(28.dp)
+                        .clickable { navController.navigate(Screen.AllTracks.route) },
                     colorFilter = ColorFilter.tint(Color.Gray)
 
                 )
@@ -76,6 +78,7 @@ fun HomeScreen(
             ) {
                 items(trackState.tracks) { tracks ->
                     TrackItem(
+                        navController = navController,
                         track = tracks,
                         onItemClicked = {
                             navController.navigate(Screen.TrackDetails.route + "/${tracks.id}")
@@ -98,7 +101,8 @@ fun HomeScreen(
                     contentDescription = "arrow",
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .size(28.dp),
+                        .size(28.dp)
+                        .clickable { navController.navigate(Screen.AllTracks.route) },
                     colorFilter = ColorFilter.tint(Color.Gray)
 
                 )
@@ -111,6 +115,7 @@ fun HomeScreen(
             ) {
                 items(trackState.tracks) { tracks ->
                     TrackItem(
+                        navController = navController,
                         track = tracks,
                         onItemClicked = {
                             navController.navigate(Screen.TrackDetails.route + "/${tracks.id}")
@@ -133,7 +138,8 @@ fun HomeScreen(
                     contentDescription = "arrow",
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .size(28.dp),
+                        .size(28.dp)
+                        .clickable { navController.navigate(Screen.AllTracks.route) },
                     colorFilter = ColorFilter.tint(Color.Gray)
 
                 )
@@ -146,6 +152,7 @@ fun HomeScreen(
             ) {
                 items(trackState.tracks) { tracks ->
                     TrackItem(
+                        navController = navController,
                         track = tracks,
                         onItemClicked = {
                             navController.navigate(Screen.TrackDetails.route + "/${tracks.id}")
@@ -169,9 +176,7 @@ fun HomeScreen(
         if (trackState.isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center),
-                color = colorResource(
-                    id = R.color.purple
-                )
+                color = Color.White
             )
         }
     }

@@ -18,17 +18,21 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.swayy.musicpark.R
 import com.swayy.musicpark.domain.models.Track
+import com.swayy.musicpark.presentation.Screen
 
 @Composable
 fun TrackItem(
+    navController: NavController,
     track: Track,
     onItemClicked: (track: Track) -> Unit
 ) {
@@ -38,13 +42,14 @@ fun TrackItem(
                 modifier = Modifier
                     .size(170.dp)
                     .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 10.dp)
-                    .clickable { onItemClicked(track) },
+                    .clickable { navController.navigate(Screen.AllTracks.route)},
                 elevation = 2.dp
             ) {
                 Box {
                     AsyncImage(
                         model = "https://api.napster.com/imageserver/v2/albums/${track.albumId}/images/500x500.jpg",
-                        contentDescription = ""
+                        contentDescription = "",
+                        contentScale = ContentScale.Crop
                     )
                     Row(
                         modifier = Modifier
@@ -52,6 +57,7 @@ fun TrackItem(
                             .padding(start = 10.dp, bottom = 10.dp)
                             .clip(RoundedCornerShape(100.dp))
                             .background(Color.Black.copy(alpha = 0.2f))
+                            .clickable { onItemClicked(track) }
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.ic_baseline_play_arrow_24),
@@ -61,7 +67,6 @@ fun TrackItem(
                                 .padding(7.dp),
                             colorFilter = ColorFilter.tint(Color.White.copy(alpha = 0.8f))
                         )
-
                     }
                 }
 

@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.swayy.musicpark.domain.models.Track
 import com.swayy.musicpark.presentation.Screen
+import com.swayy.musicpark.presentation.screens.tracks.AllTracksScreen
 import com.swayy.musicpark.presentation.screens.tracks.HomeScreen
 import com.swayy.musicpark.presentation.screens.tracksDetails.TrackDetailsScreen
 
@@ -27,6 +28,11 @@ fun NavigationGraph(navController: NavHostController) {
             route = Screen.TrackDetails.route + "/{id}"
         ){
             TrackDetailsScreen()
+        }
+        composable(
+            route = Screen.AllTracks.route
+        ){
+            AllTracksScreen(navController)
         }
 
     }
