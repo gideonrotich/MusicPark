@@ -56,7 +56,7 @@ fun TrackItem(
                             .align(Alignment.BottomStart)
                             .padding(start = 10.dp, bottom = 10.dp)
                             .clip(RoundedCornerShape(100.dp))
-                            .background(Color.Black.copy(alpha = 0.2f))
+                            .background(Color.Black.copy(alpha = 0.3f))
                             .clickable { onItemClicked(track) }
                     ) {
                         Image(
@@ -65,7 +65,7 @@ fun TrackItem(
                             modifier = Modifier
                                 .size(40.dp)
                                 .padding(7.dp),
-                            colorFilter = ColorFilter.tint(Color.White.copy(alpha = 0.8f))
+                            colorFilter = ColorFilter.tint(Color.White)
                         )
                     }
                 }

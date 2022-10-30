@@ -6,17 +6,9 @@ import com.google.gson.Gson
 import com.swayy.musicpark.data.local.converters.Converters
 import com.swayy.musicpark.data.local.db.NapsterDatabase
 import com.swayy.musicpark.data.remote.api.NapsterApi
-import com.swayy.musicpark.data.remote.repository.ArtistRepositoryImpl
-import com.swayy.musicpark.data.remote.repository.GetTrackDetailsRepositoryImpl
-import com.swayy.musicpark.data.remote.repository.PostRepositoryImpl
-import com.swayy.musicpark.data.remote.repository.TrackRepositoryImpl
-import com.swayy.musicpark.domain.repository.ArtistRepository
-import com.swayy.musicpark.domain.repository.GetTrackDetailsRepository
-import com.swayy.musicpark.domain.repository.TrackRepository
-import com.swayy.musicpark.domain.repository.getPosts
-import com.swayy.musicpark.domain.use_cases.GetArtistUseCase
-import com.swayy.musicpark.domain.use_cases.GetPostsUseCase
-import com.swayy.musicpark.domain.use_cases.GetTrackDetailsUseCase
+import com.swayy.musicpark.data.remote.repository.*
+import com.swayy.musicpark.domain.repository.*
+import com.swayy.musicpark.domain.use_cases.*
 import com.swayy.musicpark.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -81,6 +73,16 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providesPostDetailsRepository(
+        napsterApi: NapsterApi
+    ): PostDetailsRepository {
+        return PostDetailsRepositoryImpl(
+            napsterApi = napsterApi
+        )
+    }
+
+    @Provides
+    @Singleton
     fun providesPostsRepository(
         napsterApi: NapsterApi
     ):getPosts{
@@ -99,12 +101,38 @@ object AppModule {
         )
     }
 
+    @Provides
+    @Singleton
+    fun providesPlaylistRepository(
+        napsterApi: NapsterApi
+    ):PlaylistRepository{
+        return PlaylistRepositoryImpl(
+            napsterApi = napsterApi
+        )
+    }
+
     @Singleton
     @Provides
     fun provideGetTrackDetailsUseCase(
         getTrackRepository: GetTrackDetailsRepository
     ): GetTrackDetailsUseCase {
         return GetTrackDetailsUseCase(getTrackRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetPostDetailsUseCase(
+        postDetailsRepository: PostDetailsRepository
+    ): GetPostDetailsUseCase {
+        return GetPostDetailsUseCase(postDetailsRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetPlaylistUseCase(
+        playlistRepository: PlaylistRepository
+    ): GetPlaylistsUseCase {
+        return GetPlaylistsUseCase(playlistRepository)
     }
 
     @Singleton

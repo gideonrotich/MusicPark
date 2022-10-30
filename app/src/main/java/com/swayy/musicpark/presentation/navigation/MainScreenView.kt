@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.alpha
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -15,6 +16,7 @@ import com.swayy.musicpark.R
 @Composable
 fun MainScreenView() {
     val navController = rememberNavController()
+
     Scaffold(
         bottomBar = { BottomNavigation(navController = navController) }
     ) {

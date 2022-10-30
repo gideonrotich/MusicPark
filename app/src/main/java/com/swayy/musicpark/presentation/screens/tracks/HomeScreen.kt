@@ -96,7 +96,7 @@ fun HomeScreen(
                         navController = navController,
                         post = posts,
                         onItemClicked = {
-
+                            navController.navigate(Screen.PostDetails.route + "/${posts.id}")
                         }
                     )
                 }

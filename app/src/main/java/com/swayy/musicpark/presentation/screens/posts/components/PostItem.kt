@@ -41,21 +41,21 @@ fun PostItem(
                 modifier = Modifier
                     .size(250.dp, 170.dp)
                     .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 10.dp)
-                    .clickable { navController.navigate(Screen.AllTracks.route) },
+                    .clickable { onItemClicked(post) },
                 elevation = 2.dp
             ) {
                 Box {
                     AsyncImage(
                         model = "https://api.napster.com/imageserver/v2/imagesets/${post.image}/images/500x500.jpg",
                         contentDescription = "",
-                        contentScale = ContentScale.Crop
+                        contentScale = ContentScale.Crop,
                     )
                     Row(
                         modifier = Modifier
                             .align(Alignment.BottomStart)
                             .padding(start = 10.dp, bottom = 10.dp)
                             .clip(RoundedCornerShape(100.dp))
-                            .background(Color.Black.copy(alpha = 0.2f))
+                            .background(Color.Black.copy(alpha = 0.3f))
                             .clickable { onItemClicked(post) }
                     ) {
                         Image(
@@ -64,7 +64,7 @@ fun PostItem(
                             modifier = Modifier
                                 .size(40.dp)
                                 .padding(7.dp),
-                            colorFilter = ColorFilter.tint(Color.White.copy(alpha = 0.8f))
+                            colorFilter = ColorFilter.tint(Color.White)
                         )
                     }
                 }
