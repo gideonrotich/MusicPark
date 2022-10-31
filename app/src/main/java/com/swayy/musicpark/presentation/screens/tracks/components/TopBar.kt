@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.swayy.musicpark.R
+import java.util.*
 
 @Composable
 fun TopBar() {
@@ -39,8 +40,9 @@ fun TopBar() {
                 )
             }
 
+            //display greeting message based on time
             Text(
-                text = "Good morning",
+                text = getGreetingMessage(),
                 color = Color.White,
                 fontSize = 22.sp,
                 modifier = Modifier.padding(top = 0.dp, start = 10.dp).align(Alignment.CenterVertically),
@@ -75,4 +77,35 @@ fun TopBar() {
             }
         }
     }
+}
+
+//use this or the one below
+fun getGreetingMessage():String{
+    val c = Calendar.getInstance()
+    val timeOfDay = c.get(Calendar.HOUR_OF_DAY)
+
+    return when (timeOfDay) {
+        in 0..11 -> "Good morning"
+        in 12..15 -> "Good afternoon"
+        in 16..20 -> "Good evening"
+        in 21..23 -> "Good night"
+        else -> "Hello"
+    }
+}
+
+//alternative to the code above
+private fun showDayMessage():String {
+    val c: Calendar = Calendar.getInstance()
+    var message:String ?=null
+    val timeOfDay: Int = c.get(Calendar.HOUR_OF_DAY)
+    if (timeOfDay >= 0 && timeOfDay < 12) {
+        message =  "Good morning"
+    } else if (timeOfDay >= 12 && timeOfDay < 16) {
+        message =  "Good afternoon"
+    } else if (timeOfDay >= 16 && timeOfDay < 21) {
+        message =  "Good evening"
+    } else if (timeOfDay >= 21 && timeOfDay < 24) {
+        message =  "Good night"
+    }
+    return  message!!
 }

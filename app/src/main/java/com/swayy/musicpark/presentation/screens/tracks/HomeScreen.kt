@@ -172,7 +172,7 @@ fun HomeScreen(
                         navController = navController,
                         artist = artists,
                         onItemClicked = {
-
+                            navController.navigate(Screen.ArtistDetails.route + "/${artists.id}")
                         }
                     )
                 }

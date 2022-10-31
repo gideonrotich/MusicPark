@@ -20,5 +20,5 @@ sealed class Screen(val route: String) {
     object TrackDetails : Screen("track_details_screen")
     object AllTracks:Screen("all_tracks")
     object PostDetails: Screen("post_details_screen")
-    object Test:Screen("test")
+    object ArtistDetails:Screen("artists_details")
 }

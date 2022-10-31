@@ -111,12 +111,48 @@ object AppModule {
         )
     }
 
+    @Provides
+    @Singleton
+    fun providesTopRepository(
+        napsterApi: NapsterApi
+    ):TopRepository{
+        return TopRepositoryImpl(
+            napsterApi = napsterApi
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providesArtistDetailsRepository(
+        napsterApi: NapsterApi
+    ):ArtistDetailsRepository{
+        return ArtistDetailsRepositoryImpl(
+            napsterApi = napsterApi
+        )
+    }
+
     @Singleton
     @Provides
     fun provideGetTrackDetailsUseCase(
         getTrackRepository: GetTrackDetailsRepository
     ): GetTrackDetailsUseCase {
         return GetTrackDetailsUseCase(getTrackRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetTopUseCase(
+        topRepository: TopRepository
+    ): GetTopUseCase {
+        return GetTopUseCase(topRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetArtistDetailsUseCase(
+        artistDetailsRepository: ArtistDetailsRepository
+    ): GetArtistDetailsUseCase {
+        return GetArtistDetailsUseCase(artistDetailsRepository)
     }
 
     @Singleton

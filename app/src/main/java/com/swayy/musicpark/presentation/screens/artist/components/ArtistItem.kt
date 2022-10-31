@@ -38,7 +38,7 @@ fun ArtistItem(
                 modifier = Modifier
                     .size(250.dp, 170.dp)
                     .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 10.dp)
-                    .clickable { navController.navigate(Screen.AllTracks.route) },
+                    .clickable { onItemClicked(artist) },
                 elevation = 2.dp
             ) {
                 Box {
