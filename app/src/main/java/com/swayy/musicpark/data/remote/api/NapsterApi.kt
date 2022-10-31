@@ -1,5 +1,6 @@
 package com.swayy.musicpark.data.remote.api
 
+import com.swayy.musicpark.data.remote.dto.album.AlbumResponseDto
 import com.swayy.musicpark.data.remote.dto.artist.ArtistResponseDto
 import com.swayy.musicpark.data.remote.dto.playlist.PlaylistResponseDto
 import com.swayy.musicpark.data.remote.dto.posts.PostsResponseDto
@@ -69,4 +70,18 @@ interface NapsterApi {
         @Query("limit") limit: String = "3",
         @Query("apikey") apikey: String = Constants.API_KEY
     ): ArtistResponseDto
+
+    //get artist albums
+    @GET("v2.2/artists/{id}/albums/top")
+    suspend fun getAlbums(
+        @Path("id") id: String,
+        @Query("limit") limit: String = "10",
+        @Query("apikey") apikey: String = Constants.API_KEY
+    ):AlbumResponseDto
+
+    @GET("v2.2/albums/{id}")
+    suspend fun getAlbumDetails(
+        @Path("id") id: String,
+        @Query("apikey") apikey: String = Constants.API_KEY
+    ):AlbumResponseDto
 }

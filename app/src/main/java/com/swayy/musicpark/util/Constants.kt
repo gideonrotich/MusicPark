@@ -12,4 +12,6 @@ object Constants {
 
     const val ARTIST_ID = "id"
 
+    const val ALBUM_ID = "id"
+
 }

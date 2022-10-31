@@ -1,11 +1,10 @@
-package com.swayy.musicpark.presentation.screens.artist
+package com.swayy.musicpark.presentation.screens.artist.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -21,7 +20,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -31,23 +29,15 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.swayy.musicpark.R
 import com.swayy.musicpark.presentation.Screen
-import com.swayy.musicpark.presentation.screens.artist.components.AlbumItem
-import com.swayy.musicpark.presentation.screens.artist.components.AlbumViewModel
 import com.swayy.musicpark.presentation.screens.postdetails.PlaylistItem
 import com.swayy.musicpark.presentation.screens.postdetails.PostDetailsViewModel
-import com.swayy.musicpark.presentation.screens.tracks.components.AllTracksItem
-import com.swayy.musicpark.presentation.screens.tracks.components.TrackItem
 
 @Composable
-fun ArtistDetailsScreen(
+fun AlbumDetailScreen(
     navController: NavController,
-    artistDetailsViewModel: ArtistDetailsViewModel = hiltViewModel(),
-    topViewModel: TopViewModel = hiltViewModel(),
-    albumViewModel: AlbumViewModel = hiltViewModel()
+    albumDetailViewModel: AlbumDetailViewModel = hiltViewModel(),
 ) {
-    val topState = topViewModel.state.value
-    val artistState = artistDetailsViewModel.state.value
-    val albumState = albumViewModel.state.value
+    val albumlistState = albumDetailViewModel.state.value
 
     Box(
         modifier = Modifier
@@ -57,7 +47,7 @@ fun ArtistDetailsScreen(
             )
     ) {
 
-        artistState.artistDetails.let { post ->
+        albumlistState.album.let { post ->
             post.forEach {
 
 
@@ -95,17 +85,16 @@ fun ArtistDetailsScreen(
                     ) {
                         //"https://api.napster.com/imageserver/v2/imagesets/${it.image}/images/500x500.jpg"
 
-
                         AsyncImage(
                             alignment = Alignment.Center,
                             contentScale = ContentScale.FillBounds,
-                            model = "https://api.napster.com/imageserver/v2/artists/${it.id}/images/500x500.jpg",
+                            model = "https://api.napster.com/imageserver/v2/albums/${it.id}/images/500x500.jpg",
                             contentDescription = null
                         )
                     }
 
                     Text(
-                        text = it.name ?: "",
+                        text = it.name,
                         modifier = Modifier.padding(start = 17.dp, top = 16.dp),
                         fontSize = 32.sp,
                         color = Color.White,
@@ -138,96 +127,47 @@ fun ArtistDetailsScreen(
                         }
                         Spacer(modifier = Modifier.width(10.dp))
                         Image(
-                            painter = painterResource(id = R.drawable.radio),
+                            painter = painterResource(id = R.drawable.shuffle),
                             contentDescription = "",
                             colorFilter = ColorFilter.tint(Color.LightGray),
                             modifier = Modifier
                                 .align(Alignment.CenterVertically)
-                                .padding(11.dp)
+                                .padding(12.dp)
                         )
-
-                    }
-
-                    Spacer(modifier = Modifier.height(14.dp))
-
-                    Text(
-                        text = "Top Tracks",
-                        color = Color.White,
-                        fontSize = 17.sp,
-                        modifier = Modifier.padding(top = 0.dp, start = 20.dp),
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = FontFamily.SansSerif
-                    )
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    //get playlist tracks
-                    topViewModel.getTop(it.id!!)
-
-
-//                    LazyColumn(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(start = 4.dp, top = 6.dp)
-//                    ) {
-//                        items(topState.top.take(3)) { playlist ->
-//                            AllTracksItem(
-//                                navController = navController,
-//                                track = playlist,
-//                                onItemClicked = {
-//                                    navController.navigate(Screen.TrackDetails.route + "/${playlist.id}")
-//                                }
-//                            )
-//                            if (topState.isLoading) {
-//                                CircularProgressIndicator(
-//                                    modifier = Modifier.align(Alignment.CenterHorizontally),
-//                                    color = Color.White
-//                                )
-//                            }
-//                        }
-//
-//                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        text = "Albums",
-                        color = Color.White,
-                        fontSize = 17.sp,
-                        modifier = Modifier.padding(top = 0.dp, start = 20.dp),
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = FontFamily.SansSerif
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    //get albums by an artist
-                    albumViewModel.getAlbum(it.id)
-
-                    LazyRow(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 4.dp, top = 6.dp)
-                    ) {
-                        items(albumState.album.take(10)) { playlist ->
-                            AlbumItem(
-                                navController = navController,
-                                album = playlist,
-                                onItemClicked = {
-                                    navController.navigate(Screen.AlbumDetails.route + "/${playlist.id}")
-                                }
+                        Spacer(modifier = Modifier.weight(2.2f))
+                        Row {
+                            Image(
+                                painter = painterResource(id = R.drawable.repeat),
+                                contentDescription = "",
+                                colorFilter = ColorFilter.tint(Color.LightGray),
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(12.dp)
                             )
-                            if (topState.isLoading) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                                    color = Color.White
-                                )
-                            }
+
+                            Image(
+                                painter = painterResource(id = R.drawable.dots),
+                                contentDescription = "",
+                                colorFilter = ColorFilter.tint(Color.LightGray),
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(12.dp)
+                            )
+
                         }
                     }
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+
                 }
 
 
             }
-            if (artistState.error.isNotBlank()) {
+
+            if (albumlistState.error.isNotBlank()) {
                 Text(
-                    text = artistState.error,
+                    text = albumlistState.error,
                     color = MaterialTheme.colors.error,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -236,14 +176,18 @@ fun ArtistDetailsScreen(
                         .align(Alignment.Center)
                 )
             }
-            if (artistState.isLoading) {
+
+            if (albumlistState.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White
                 )
             }
+
         }
 
 
     }
+
+
 }

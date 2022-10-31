@@ -1,6 +1,7 @@
 package com.swayy.musicpark.data.remote.mapper
 
 import com.swayy.musicpark.data.local.entity.TrackEntity
+import com.swayy.musicpark.data.remote.dto.album.Album
 import com.swayy.musicpark.data.remote.dto.artist.Artist
 import com.swayy.musicpark.data.remote.dto.posts.Post
 import com.swayy.musicpark.data.remote.dto.tracks.Track
@@ -121,5 +122,34 @@ internal fun com.swayy.musicpark.data.remote.dto.playlist.Track.toDomain(): Play
         previewURL,
         shortcut,
         type
+    )
+}
+
+internal fun Album.toDomain(): com.swayy.musicpark.domain.models.Album {
+    return com.swayy.musicpark.domain.models.Album(
+        accountPartner,
+        amg,
+        artistName,
+        contributingArtists,
+        copyright,
+        discCount,
+        discographies,
+        href,
+        id,
+        isAvailableInAtmos,
+        isAvailableInHiRes,
+        isExplicit,
+        isSingle,
+        isStreamable,
+        label,
+        links,
+        name,
+        originallyReleased,
+        released,
+        shortcut,
+        tags,
+        trackCount,
+        type,
+        upc
     )
 }
