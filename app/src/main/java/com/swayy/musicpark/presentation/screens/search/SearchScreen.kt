@@ -130,34 +130,34 @@ fun SearchScreen(
                         when (searchWidgetState) {
                             SearchWidgetState.CLOSED -> {
                                 Column {
-                                    Spacer(modifier = Modifier.height(10.dp))
-                                    Row() {
-                                        Text(
-                                            text = "Genres",
-                                            color = Color.White,
-                                            fontSize = 18.sp,
-                                            modifier = Modifier.padding(top = 0.dp, start = 12.dp),
-                                            fontWeight = FontWeight.Bold,
-                                            fontFamily = FontFamily.SansSerif
-                                        )
-
-                                    }
-
-                                    LazyHorizontalGrid(GridCells.Fixed(1),
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(start = 0.dp, top = 6.dp)
-                                    ) {
-                                        items(genreState.genre) { tracks ->
-                                            GenreItem(
-                                                navController = navController,
-                                                artist = tracks,
-                                                onItemClicked = {
-                                                    navController.navigate(Screen.TrackDetails.route + "/${tracks.id}")
-                                                }
-                                            )
-                                        }
-                                    }
+//                                    Spacer(modifier = Modifier.height(10.dp))
+//                                    Row() {
+//                                        Text(
+//                                            text = "Genres",
+//                                            color = Color.White,
+//                                            fontSize = 18.sp,
+//                                            modifier = Modifier.padding(top = 0.dp, start = 12.dp),
+//                                            fontWeight = FontWeight.Bold,
+//                                            fontFamily = FontFamily.SansSerif
+//                                        )
+//
+//                                    }
+//
+//                                    LazyHorizontalGrid(GridCells.Fixed(1),
+//                                        modifier = Modifier
+//                                            .fillMaxWidth()
+//                                            .padding(start = 0.dp, top = 6.dp)
+//                                    ) {
+//                                        items(genreState.genre) { tracks ->
+//                                            GenreItem(
+//                                                navController = navController,
+//                                                artist = tracks,
+//                                                onItemClicked = {
+//                                                    navController.navigate(Screen.TrackDetails.route + "/${tracks.id}")
+//                                                }
+//                                            )
+//                                        }
+//                                    }
                                     ////
                                     Spacer(modifier = Modifier.height(10.dp))
                                     Row(horizontalArrangement = Arrangement.SpaceBetween) {
