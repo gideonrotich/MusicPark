@@ -10,6 +10,7 @@ import com.swayy.musicpark.presentation.Screen
 import com.swayy.musicpark.presentation.screens.artist.ArtistDetailsScreen
 import com.swayy.musicpark.presentation.screens.artist.components.AlbumDetailScreen
 import com.swayy.musicpark.presentation.screens.postdetails.PostDetailsScreen
+import com.swayy.musicpark.presentation.screens.search.SearchScreen
 import com.swayy.musicpark.presentation.screens.tracks.AllTracksScreen
 import com.swayy.musicpark.presentation.screens.tracks.HomeScreen
 import com.swayy.musicpark.presentation.screens.tracksDetails.TrackDetailsScreen
@@ -21,7 +22,7 @@ fun NavigationGraph(navController: NavHostController) {
             HomeScreen(navController = navController)
         }
         composable(BottomNavItem.Search.screen_route) {
-            HomeScreen(navController = navController)
+            SearchScreen(navController = navController)
         }
         composable(BottomNavItem.YourLibrary.screen_route) {
             HomeScreen(navController = navController)

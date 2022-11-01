@@ -172,12 +172,66 @@ object AppModule {
         )
     }
 
+    @Provides
+    @Singleton
+    fun providesArtistSearchRepository(
+        napsterApi: NapsterApi
+    ):ArtistSearchRepository{
+        return ArtistSearchRepositoryImpl(
+            napsterApi = napsterApi
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providesSOngRepository(
+        napsterApi: NapsterApi
+    ):SongRepository{
+        return SongRepositoryImpl(
+            napsterApi = napsterApi
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providesGenreRepository(
+        napsterApi: NapsterApi
+    ):GenreRepository{
+        return GenreRepositoryImpl(
+            napsterApi = napsterApi
+        )
+    }
+
     @Singleton
     @Provides
     fun provideGetTrackDetailsUseCase(
         getTrackRepository: GetTrackDetailsRepository
     ): GetTrackDetailsUseCase {
         return GetTrackDetailsUseCase(getTrackRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetGenreUseCase(
+        genreRepository: GenreRepository
+    ): GetGenreUseCase {
+        return GetGenreUseCase(genreRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetSOngUseCase(
+        songRepository: SongRepository
+    ): GetSongUseCase {
+        return GetSongUseCase(songRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetArtistSearchUseCase(
+       artistSearchRepository: ArtistSearchRepository
+    ): GetArtistSearchUseCase {
+        return GetArtistSearchUseCase(artistSearchRepository)
     }
 
     @Singleton

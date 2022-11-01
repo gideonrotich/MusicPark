@@ -1,10 +1,10 @@
 package com.swayy.musicpark.domain.models
 
-import com.swayy.musicpark.data.remote.dto.artist.AlbumGroups
-import com.swayy.musicpark.data.remote.dto.artist.Bio
-import com.swayy.musicpark.data.remote.dto.artist.Links
+import com.swayy.musicpark.data.remote.dto.artist.test.AlbumGroups
+import com.swayy.musicpark.data.remote.dto.artist.test.Bio
+import com.swayy.musicpark.data.remote.dto.artist.test.Links
 
-data class Artist(
+data class Test(
     val albumGroups: AlbumGroups?,
     val amg: String?,
     val bios: List<Bio>?,
