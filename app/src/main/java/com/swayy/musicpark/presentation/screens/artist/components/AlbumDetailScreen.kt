@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -36,8 +37,10 @@ import com.swayy.musicpark.presentation.screens.postdetails.PostDetailsViewModel
 fun AlbumDetailScreen(
     navController: NavController,
     albumDetailViewModel: AlbumDetailViewModel = hiltViewModel(),
+    musicViewModel: MusicViewModel = hiltViewModel()
 ) {
     val albumlistState = albumDetailViewModel.state.value
+    val musicState = musicViewModel.state.value
 
     Box(
         modifier = Modifier
@@ -157,8 +160,29 @@ fun AlbumDetailScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                    musicViewModel.getMusic(it.id)
 
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 4.dp, top = 6.dp)
+                    ) {
+                        items(musicState.music) { playlist ->
+                            MusicItem(
+                                navController = navController,
+                                track = playlist,
+                                onItemClicked = {
+                                    navController.navigate(Screen.TrackDetails.route + "/${playlist.id}")
+                                }
+                            )
+                            if (musicState.isLoading) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                                    color = Color.White
+                                )
+                            }
+                        }
+                    }
 
                 }
 

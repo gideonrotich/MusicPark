@@ -33,6 +33,8 @@ import com.swayy.musicpark.R
 import com.swayy.musicpark.presentation.Screen
 import com.swayy.musicpark.presentation.screens.artist.components.AlbumItem
 import com.swayy.musicpark.presentation.screens.artist.components.AlbumViewModel
+import com.swayy.musicpark.presentation.screens.artist.components.ArtistItem
+import com.swayy.musicpark.presentation.screens.artist.components.SimilarViewModel
 import com.swayy.musicpark.presentation.screens.postdetails.PlaylistItem
 import com.swayy.musicpark.presentation.screens.postdetails.PostDetailsViewModel
 import com.swayy.musicpark.presentation.screens.tracks.components.AllTracksItem
@@ -43,11 +45,13 @@ fun ArtistDetailsScreen(
     navController: NavController,
     artistDetailsViewModel: ArtistDetailsViewModel = hiltViewModel(),
     topViewModel: TopViewModel = hiltViewModel(),
-    albumViewModel: AlbumViewModel = hiltViewModel()
+    albumViewModel: AlbumViewModel = hiltViewModel(),
+    similarViewModel: SimilarViewModel = hiltViewModel()
 ) {
     val topState = topViewModel.state.value
     val artistState = artistDetailsViewModel.state.value
     val albumState = albumViewModel.state.value
+    val similarState = similarViewModel.state.value
 
     Box(
         modifier = Modifier
@@ -165,28 +169,28 @@ fun ArtistDetailsScreen(
                     topViewModel.getTop(it.id!!)
 
 
-//                    LazyColumn(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(start = 4.dp, top = 6.dp)
-//                    ) {
-//                        items(topState.top.take(3)) { playlist ->
-//                            AllTracksItem(
-//                                navController = navController,
-//                                track = playlist,
-//                                onItemClicked = {
-//                                    navController.navigate(Screen.TrackDetails.route + "/${playlist.id}")
-//                                }
-//                            )
-//                            if (topState.isLoading) {
-//                                CircularProgressIndicator(
-//                                    modifier = Modifier.align(Alignment.CenterHorizontally),
-//                                    color = Color.White
-//                                )
-//                            }
-//                        }
-//
-//                    }
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 4.dp, top = 6.dp)
+                    ) {
+                        items(topState.top.take(3)) { playlist ->
+                            AllTracksItem(
+                                navController = navController,
+                                track = playlist,
+                                onItemClicked = {
+                                    navController.navigate(Screen.TrackDetails.route + "/${playlist.id}")
+                                }
+                            )
+                            if (topState.isLoading) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                                    color = Color.White
+                                )
+                            }
+                        }
+
+                    }
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = "Albums",
@@ -221,6 +225,36 @@ fun ArtistDetailsScreen(
                             }
                         }
                     }
+
+                    //get similar artists
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = "Similar Artists",
+                        color = Color.White,
+                        fontSize = 17.sp,
+                        modifier = Modifier.padding(top = 0.dp, start = 20.dp),
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.SansSerif
+                    )
+
+                    similarViewModel.getSimilar(it.id)
+
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 4.dp, top = 6.dp)
+                    ) {
+                        items(similarState.artists) { artists ->
+                            ArtistItem(
+                                navController = navController,
+                                artist = artists,
+                                onItemClicked = {
+                                    navController.navigate(Screen.ArtistDetails.route + "/${artists.id}")
+                                }
+                            )
+                        }
+                    }
+
                 }
 
 

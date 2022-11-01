@@ -79,9 +79,24 @@ interface NapsterApi {
         @Query("apikey") apikey: String = Constants.API_KEY
     ):AlbumResponseDto
 
+    //get album details
     @GET("v2.2/albums/{id}")
     suspend fun getAlbumDetails(
         @Path("id") id: String,
         @Query("apikey") apikey: String = Constants.API_KEY
     ):AlbumResponseDto
+
+    //get tracks in an album
+    @GET("v2.2/albums/{id}/tracks")
+    suspend fun getMusic(
+        @Path("id") id: String,
+        @Query("apikey") apikey: String = Constants.API_KEY
+    ): TrackResponseDto
+
+    //get similar artists
+    @GET("v2.2/artists/{id}/similar")
+    suspend fun getSimilar(
+        @Path("id") id: String,
+        @Query("apikey") apikey: String = Constants.API_KEY
+    ): ArtistResponseDto
 }
