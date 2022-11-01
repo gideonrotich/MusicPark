@@ -19,30 +19,32 @@ class TrackRepositoryImpl(
     override fun getTracks(): Flow<Resource<List<Track>>> = flow {
         emit(Resource.Loading())
 
-//        val getTracksfromDb = trackDao.getTracks().map { it.toDomain() }
-//        emit(Resource.Success(data = getTracksfromDb))
+        val tracksFromDb =  trackDao.getTracks()
+        emit(Resource.Loading(data = tracksFromDb.map { it.toDomain() }))
+
 
         try {
-//            val apiResponse = napsterApi.getTracks()
-//            trackDao.deleteTracks()
-//            trackDao.insertTracks(apiResponse.tracks.map { it.toEntity() })
+           val apiResponse = napsterApi.getTracks()
+            trackDao.deleteTracks()
+            trackDao.insertTracks(apiResponse.tracks.map { it.toEntity() })
         } catch (exception: IOException) {
             emit(
                 Resource.Error(
                     message = "Connection Lost",
+                    data = tracksFromDb.map { it.toDomain() }
                 )
             )
         } catch (exception: HttpException) {
             emit(
                 Resource.Error(
                     message = exception.message(),
+                    data = tracksFromDb.map { it.toDomain() }
                 )
             )
         }
-//        val trackData = trackDao.getTracks().map { it.toDomain() }
-//        emit(Resource.Success(trackData))
-        val allMatches = napsterApi.getTracks().tracks.map { it.toDomain() }
-        emit(Resource.Success(allMatches))
+
+        val allTracks = trackDao.getTracks().map { it.toDomain() }
+        emit(Resource.Success(allTracks))
     }
 
 }
