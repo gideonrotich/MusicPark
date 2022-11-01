@@ -14,36 +14,37 @@ import java.io.IOException
 
 class TrackRepositoryImpl(
     private val napsterApi: NapsterApi,
-    private val trackDao: TrackDao
+    //private val trackDao: TrackDao
 ) : TrackRepository {
     override fun getTracks(): Flow<Resource<List<Track>>> = flow {
         emit(Resource.Loading())
-
-        val tracksFromDb =  trackDao.getTracks()
-        emit(Resource.Loading(data = tracksFromDb.map { it.toDomain() }))
+//
+//        val tracksFromDb =  trackDao.getTracks()
+//        emit(Resource.Loading(data = tracksFromDb.map { it.toDomain() }))
 
 
         try {
            val apiResponse = napsterApi.getTracks()
-            trackDao.deleteTracks()
-            trackDao.insertTracks(apiResponse.tracks.map { it.toEntity() })
+//            trackDao.deleteTracks()
+//            trackDao.insertTracks(apiResponse.tracks.map { it.toEntity() })
         } catch (exception: IOException) {
             emit(
                 Resource.Error(
                     message = "Connection Lost",
-                    data = tracksFromDb.map { it.toDomain() }
+                    data = null
                 )
             )
         } catch (exception: HttpException) {
             emit(
                 Resource.Error(
                     message = exception.message(),
-                    data = tracksFromDb.map { it.toDomain() }
+                    data = null
                 )
             )
         }
 
-        val allTracks = trackDao.getTracks().map { it.toDomain() }
+//        val allTracks = trackDao.getTracks().map { it.toDomain() }
+        val allTracks = napsterApi.getTracks().tracks.map { it.toDomain() }
         emit(Resource.Success(allTracks))
     }
 
