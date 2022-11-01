@@ -1,8 +1,6 @@
 package com.swayy.musicpark.presentation.screens.artist.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -48,6 +46,7 @@ fun AlbumDetailScreen(
             .background(
                 colorResource(id = R.color.darkbluetwo)
             )
+            .verticalScroll(rememberScrollState())
     ) {
 
         albumlistState.album.let { post ->
@@ -166,6 +165,7 @@ fun AlbumDetailScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 4.dp, top = 6.dp)
+                            .height(500.dp)
                     ) {
                         items(musicState.music) { playlist ->
                             MusicItem(
