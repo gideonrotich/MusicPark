@@ -1,8 +1,6 @@
 package com.swayy.musicpark.presentation.screens.search
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
@@ -12,7 +10,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -75,15 +72,11 @@ fun SearchScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.darkbluetwo))
+
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .scrollable(
-                    state = rememberScrollState(),
-                    enabled = true,
-                    orientation = Orientation.Vertical
-                )
                 .background(colorResource(id = R.color.darkbluetwo))
         ) {
 
@@ -91,6 +84,7 @@ fun SearchScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(colorResource(id = R.color.darkbluetwo))
+
             ) {
 
                 //
@@ -130,34 +124,35 @@ fun SearchScreen(
                         when (searchWidgetState) {
                             SearchWidgetState.CLOSED -> {
                                 Column {
-//                                    Spacer(modifier = Modifier.height(10.dp))
-//                                    Row() {
-//                                        Text(
-//                                            text = "Genres",
-//                                            color = Color.White,
-//                                            fontSize = 18.sp,
-//                                            modifier = Modifier.padding(top = 0.dp, start = 12.dp),
-//                                            fontWeight = FontWeight.Bold,
-//                                            fontFamily = FontFamily.SansSerif
-//                                        )
-//
-//                                    }
-//
-//                                    LazyHorizontalGrid(GridCells.Fixed(1),
-//                                        modifier = Modifier
-//                                            .fillMaxWidth()
-//                                            .padding(start = 0.dp, top = 6.dp)
-//                                    ) {
-//                                        items(genreState.genre) { tracks ->
-//                                            GenreItem(
-//                                                navController = navController,
-//                                                artist = tracks,
-//                                                onItemClicked = {
-//                                                    navController.navigate(Screen.TrackDetails.route + "/${tracks.id}")
-//                                                }
-//                                            )
-//                                        }
-//                                    }
+                                    Spacer(modifier = Modifier.height(10.dp))
+                                    Row() {
+                                        Text(
+                                            text = "Genres",
+                                            color = Color.White,
+                                            fontSize = 18.sp,
+                                            modifier = Modifier.padding(top = 0.dp, start = 12.dp),
+                                            fontWeight = FontWeight.Bold,
+                                            fontFamily = FontFamily.SansSerif
+                                        )
+
+                                    }
+
+                                    LazyHorizontalGrid(GridCells.Fixed(2),
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(start = 0.dp, top = 6.dp)
+                                            .height(200.dp)
+                                    ) {
+                                        items(genreState.genre) { tracks ->
+                                            GenreItem(
+                                                navController = navController,
+                                                artist = tracks,
+                                                onItemClicked = {
+                                                    navController.navigate(Screen.TrackDetails.route + "/${tracks.id}")
+                                                }
+                                            )
+                                        }
+                                    }
                                     ////
                                     Spacer(modifier = Modifier.height(10.dp))
                                     Row(horizontalArrangement = Arrangement.SpaceBetween) {
@@ -187,6 +182,7 @@ fun SearchScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(start = 0.dp, top = 6.dp)
+                                            .height(220.dp)
                                     ) {
                                         items(trackState.tracks.takeLast(10)) { tracks ->
                                             TrackItem(
@@ -207,7 +203,7 @@ fun SearchScreen(
                                             text = "Popular Pop Artists",
                                             color = Color.White,
                                             fontSize = 18.sp,
-                                            modifier = Modifier.padding(top = 0.dp, start = 20.dp),
+                                            modifier = Modifier.padding(top = 0.dp, start = 12.dp),
                                             fontWeight = FontWeight.Bold,
                                             fontFamily = FontFamily.SansSerif
                                         )
@@ -227,7 +223,8 @@ fun SearchScreen(
                                     LazyRow(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(start = 4.dp, top = 6.dp)
+                                            .padding(start = 0.dp, top = 6.dp)
+                                            .height(220.dp)
                                     ) {
                                         items(artistState.artists.takeLast(10)) { artists ->
                                             ArtistItem(
@@ -260,6 +257,7 @@ fun SearchScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(start = 0.dp, top = 6.dp)
+                                            .height(250.dp)
 
                                     ) {
                                         items(songState.song.take(3)) { song ->
@@ -293,6 +291,7 @@ fun SearchScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(start = 0.dp, top = 6.dp)
+                                            .height(250.dp)
 
                                     ) {
                                         items(state.artist.take(3)) { playlist ->
@@ -536,7 +535,8 @@ fun GenreItem(
             fontWeight = FontWeight.Bold,
             fontSize = 15.sp,
             modifier = Modifier
-                .align(Alignment.BottomStart),
+                .align(Alignment.BottomStart)
+                .padding(start = 10.dp, top = 2.dp),
             maxLines = 1
         )
 

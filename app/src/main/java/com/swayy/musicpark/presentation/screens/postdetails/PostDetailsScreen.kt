@@ -1,9 +1,7 @@
 package com.swayy.musicpark.presentation.screens.postdetails
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -52,8 +50,9 @@ fun PostDetailsScreen(
         postDetailsState.postDetails.let { post ->
             post.forEach {
 
-
-                Column(modifier = Modifier.fillMaxSize()) {
+                Column(modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -172,6 +171,7 @@ fun PostDetailsScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 4.dp, top = 6.dp)
+                            .height(500.dp)
                     ) {
                         items(playlistState.playlist) { playlist ->
                             PlaylistItem(
