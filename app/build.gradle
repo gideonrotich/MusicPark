@@ -130,6 +130,8 @@ dependencies {
     api "com.google.android.exoplayer:exoplayer-ui:$exoplayerVersion"
     api "com.google.android.exoplayer:extension-mediasession:$exoplayerVersion"
 
+    // Timber for logging
+    implementation 'com.jakewharton.timber:timber:5.0.1'
 
     androidTestImplementation "com.google.truth:truth:1.0.1"
     testImplementation 'junit:junit:4.13.2'
