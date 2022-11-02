@@ -35,7 +35,7 @@ class GenreViewModel @Inject constructor(
                         Log.d("DETAILS:: ", result.message.toString())
                     }
                     is Resource.Loading -> {
-                        Log.d("DETAILS:: ", "Loading.....")
+                        _state.value = GenreListState(isLoading = true)
                     }
                 }
             }

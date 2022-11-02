@@ -1,5 +1,6 @@
 package com.swayy.musicpark.presentation.screens.search
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
@@ -18,6 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
@@ -44,6 +47,7 @@ import com.swayy.musicpark.presentation.screens.artist.ArtistViewModel
 import com.swayy.musicpark.presentation.screens.artist.components.ArtistItem
 import com.swayy.musicpark.presentation.screens.genre.GenreViewModel
 import com.swayy.musicpark.presentation.screens.search.components.ArtistSearchViewModel
+import com.swayy.musicpark.presentation.screens.tracks.AnimatedShimmer
 import com.swayy.musicpark.presentation.screens.tracks.TrackViewModel
 import com.swayy.musicpark.presentation.screens.tracks.components.TopBar
 import com.swayy.musicpark.presentation.screens.tracks.components.TrackItem
@@ -140,6 +144,14 @@ fun SearchScreen(
                                         )
 
                                     }
+                                    if (genreState.isLoading) {
+                                        Row {
+                                            repeat(4){
+                                                AnimatedShimmerthree()
+                                            }
+                                        }
+
+                                    }
 
                                     LazyHorizontalGrid(GridCells.Fixed(2),
                                         modifier = Modifier
@@ -183,6 +195,14 @@ fun SearchScreen(
 
                                         )
                                         Spacer(modifier = Modifier.weight(0.3f))
+                                    }
+                                    if (artistState.isLoading) {
+                                        Row {
+                                            repeat(4){
+                                                AnimatedShimmer()
+                                            }
+                                        }
+
                                     }
                                     LazyRow(
                                         modifier = Modifier
@@ -413,7 +433,7 @@ fun ArtistSearchItem(
 
             }
 
-            Row(
+            Column(
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .align(Alignment.CenterVertically)
@@ -426,6 +446,18 @@ fun ArtistSearchItem(
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp,
                     modifier = Modifier.width(170.dp),
+                    maxLines = 1
+                )
+                Spacer(modifier = Modifier.height(1.dp))
+                Text(
+                    text = "Artist",
+                    fontFamily = FontFamily.SansSerif,
+                    color = Color.Gray,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .width(170.dp)
+                        .clickable { onItemClicked(artist) },
                     maxLines = 1
                 )
 
@@ -460,7 +492,7 @@ fun SongItem(
 
             }
 
-            Row(
+            Column(
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .align(Alignment.CenterVertically)
@@ -471,7 +503,20 @@ fun SongItem(
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp,
-                    modifier = Modifier.width(170.dp)
+                    modifier = Modifier
+                        .width(170.dp)
+                        .clickable { onItemClicked(artist) },
+                    maxLines = 1
+                )
+                Spacer(modifier = Modifier.height(1.dp))
+                Text(
+                    text = "Song : "+artist.artistName ?: "",
+                    fontFamily = FontFamily.SansSerif,
+                    color = Color.Gray,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .width(170.dp)
                         .clickable { onItemClicked(artist) },
                     maxLines = 1
                 )
@@ -520,6 +565,65 @@ fun GenreItem(
             maxLines = 1
         )
 
+
+    }
+}
+
+
+@Composable
+fun AnimatedShimmerthree() {
+    val shimmerColors = listOf(
+        Color.LightGray.copy(alpha = 0.2f),
+        Color.LightGray.copy(alpha = 0.1f),
+        Color.LightGray.copy(alpha = 0.2f),
+    )
+
+    val transition = rememberInfiniteTransition()
+    val translateAnim = transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 1000,
+                easing = FastOutSlowInEasing
+            ),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
+    val brush = Brush.linearGradient(
+        colors = shimmerColors,
+        start = Offset.Zero,
+        end = Offset(x = translateAnim.value, y = translateAnim.value)
+    )
+
+    ShimmerGridItemthree(brush = brush)
+}
+
+@Composable
+fun ShimmerGridItemthree(brush: Brush) {
+    Column(
+        modifier = Modifier
+            .padding(all = 10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(
+            modifier = Modifier
+                .height(75.dp)
+                .width(95.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .fillMaxWidth(fraction = 0.7f)
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(
+            modifier = Modifier
+                .height(75.dp)
+                .width(95.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .fillMaxWidth(fraction = 0.7f)
+                .background(brush)
+        )
 
     }
 }

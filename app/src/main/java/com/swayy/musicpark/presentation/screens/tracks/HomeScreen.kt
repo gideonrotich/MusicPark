@@ -1,17 +1,25 @@
 package com.swayy.musicpark.presentation.screens.tracks
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
@@ -80,6 +88,15 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.weight(0.3f))
             }
 
+            if (postState.isLoading) {
+                Row {
+                  repeat(4){
+                      AnimatedShimmer()
+                  }
+                }
+
+            }
+
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -118,6 +135,14 @@ fun HomeScreen(
                 )
                 Spacer(modifier = Modifier.weight(0.3f))
             }
+            if (trackState.isLoading){
+                Row() {
+                    repeat(4){
+                        AnimatedShimmertwo()
+                    }
+                }
+            }
+
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,6 +181,14 @@ fun HomeScreen(
                 )
                 Spacer(modifier = Modifier.weight(0.3f))
             }
+            if (artistState.isLoading) {
+                Row {
+                    repeat(4){
+                        AnimatedShimmer()
+                    }
+                }
+
+            }
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -185,13 +218,131 @@ fun HomeScreen(
                     .align(Alignment.Center)
             )
         }
-        if (trackState.isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-                color = Color.White
-            )
-        }
+
     }
 
 
+}
+
+
+@Composable
+fun AnimatedShimmer() {
+    val shimmerColors = listOf(
+        Color.LightGray.copy(alpha = 0.2f),
+        Color.LightGray.copy(alpha = 0.1f),
+        Color.LightGray.copy(alpha = 0.2f),
+    )
+
+    val transition = rememberInfiniteTransition()
+    val translateAnim = transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 1000,
+                easing = FastOutSlowInEasing
+            ),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
+    val brush = Brush.linearGradient(
+        colors = shimmerColors,
+        start = Offset.Zero,
+        end = Offset(x = translateAnim.value, y = translateAnim.value)
+    )
+
+    ShimmerGridItem(brush = brush)
+}
+
+@Composable
+fun ShimmerGridItem(brush: Brush) {
+    Column(
+        modifier = Modifier
+            .padding(all = 10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(
+            modifier = Modifier
+                .height(120.dp)
+                .width(210.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .fillMaxWidth(fraction = 0.7f)
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        Column(verticalArrangement = Arrangement.Center) {
+            Spacer(
+                modifier = Modifier
+                    .height(18.dp)
+                    .width(210.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+
+
+        }
+    }
+}
+
+@Composable
+fun AnimatedShimmertwo() {
+    val shimmerColors = listOf(
+        Color.LightGray.copy(alpha = 0.2f),
+        Color.LightGray.copy(alpha = 0.1f),
+        Color.LightGray.copy(alpha = 0.2f),
+    )
+
+    val transition = rememberInfiniteTransition()
+    val translateAnim = transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 1000,
+                easing = FastOutSlowInEasing
+            ),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
+    val brush = Brush.linearGradient(
+        colors = shimmerColors,
+        start = Offset.Zero,
+        end = Offset(x = translateAnim.value, y = translateAnim.value)
+    )
+
+    ShimmerGridItemtwo(brush = brush)
+}
+
+@Composable
+fun ShimmerGridItemtwo(brush: Brush) {
+    Column(
+        modifier = Modifier
+            .padding(all = 10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(
+            modifier = Modifier
+                .height(120.dp)
+                .width(120.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .fillMaxWidth(fraction = 0.7f)
+                .background(brush)
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        Column(verticalArrangement = Arrangement.Center) {
+            Spacer(
+                modifier = Modifier
+                    .height(16.dp)
+                    .width(120.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .fillMaxWidth(fraction = 0.9f)
+                    .background(brush)
+            )
+
+
+        }
+    }
 }
