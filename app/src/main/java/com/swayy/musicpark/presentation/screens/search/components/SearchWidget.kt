@@ -31,23 +31,31 @@ fun MainAppBar(
     onCloseClicked: () -> Unit,
     onTextChange: (String) -> Unit,
     onSearchClicked: (String) -> Unit,
-    onSearchTriggered: () -> Unit
+    onSearchTriggered: () -> Unit,
+    modifier: Modifier
 ) {
-    when (searchWidgetState) {
-        SearchWidgetState.CLOSED -> {
-            DefaultAppBar(
-                onSearchClicked = onSearchTriggered,
-            )
-        }
-        SearchWidgetState.OPENED -> {
-            SearchAppBar(
-                text = searchStringState,
-                onTextChange = onTextChange,
-                onCloseClicked = onCloseClicked,
-                onSearchClicked = onSearchClicked
-            )
+    Box(
+        modifier
+            .padding(start = 30.dp, end = 30.dp)
+            .background(colorResource(id = R.color.darkbluetwo))) {
+        when (searchWidgetState) {
+            SearchWidgetState.CLOSED -> {
+                DefaultAppBar(
+                    onSearchClicked = onSearchTriggered,
+                )
+            }
+            SearchWidgetState.OPENED -> {
+                SearchAppBar(
+                    text = searchStringState,
+                    onTextChange = onTextChange,
+                    onCloseClicked = onCloseClicked,
+                    onSearchClicked = onSearchClicked
+                )
+            }
         }
     }
+
+
 }
 
 @Composable
@@ -143,26 +151,26 @@ fun SearchAppBar(
 fun DefaultAppBar(
     onSearchClicked: () -> Unit,
 ) {
-        TopAppBar(
-            backgroundColor = Color.White,
-            title = {
-                Text(
-                    text = "Search artists, tracks,or albums",
-                    color = Color.Black,
-                    fontSize = 16.sp,
-                    modifier = Modifier.clickable { onSearchClicked() }
+    TopAppBar(
+        backgroundColor = Color.White,
+        title = {
+            Text(
+                text = "Search artists, tracks,or albums",
+                color = Color.Black,
+                fontSize = 16.sp,
+                modifier = Modifier.clickable { onSearchClicked() }
+            )
+        },
+        actions = {
+            IconButton(onClick = { onSearchClicked() }) {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "Search Icon",
+                    tint = Color.Black
                 )
-            },
-            actions = {
-                IconButton(onClick = { onSearchClicked() }) {
-                    Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "Search Icon",
-                        tint = Color.Black
-                    )
-                }
             }
-        )
+        }
+    )
 
 
 }

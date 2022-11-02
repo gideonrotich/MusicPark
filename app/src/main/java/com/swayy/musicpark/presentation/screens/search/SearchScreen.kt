@@ -10,12 +10,14 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
@@ -88,7 +90,7 @@ fun SearchScreen(
             ) {
 
                 //
-                SearchHeader()
+                SearchHeader(text = "Search")
 
                 Scaffold(
                     scaffoldState = scaffoldState,
@@ -109,12 +111,14 @@ fun SearchScreen(
                             },
                             onSearchTriggered = {
                                 viewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
-                            }
+                            },
+                            modifier = Modifier
                         )
                     },
                     modifier = Modifier
                         .background(colorResource(id = R.color.darkbluetwo))
-                        .padding(start = 12.dp, end = 12.dp)
+                        .padding(start = 0.dp, end = 0.dp, top = 14.dp),
+                    backgroundColor = colorResource(id = R.color.darkbluetwo)
                 ) {
                     Box(
                         modifier = Modifier
@@ -124,7 +128,7 @@ fun SearchScreen(
                         when (searchWidgetState) {
                             SearchWidgetState.CLOSED -> {
                                 Column {
-                                    Spacer(modifier = Modifier.height(10.dp))
+                                    Spacer(modifier = Modifier.height(20.dp))
                                     Row() {
                                         Text(
                                             text = "Genres",
@@ -140,7 +144,7 @@ fun SearchScreen(
                                     LazyHorizontalGrid(GridCells.Fixed(2),
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(start = 0.dp, top = 6.dp)
+                                            .padding(start = 2.dp, top = 6.dp)
                                             .height(200.dp)
                                     ) {
                                         items(genreState.genre) { tracks ->
@@ -153,50 +157,10 @@ fun SearchScreen(
                                             )
                                         }
                                     }
-                                    ////
-                                    Spacer(modifier = Modifier.height(10.dp))
-                                    Row(horizontalArrangement = Arrangement.SpaceBetween) {
-                                        Text(
-                                            text = "Popular Pop Tracks",
-                                            color = Color.White,
-                                            fontSize = 18.sp,
-                                            modifier = Modifier.padding(top = 0.dp, start = 12.dp),
-                                            fontWeight = FontWeight.Bold,
-                                            fontFamily = FontFamily.SansSerif
-                                        )
-                                        Spacer(modifier = Modifier.weight(2.4f))
-                                        Image(
-                                            painter = painterResource(id = R.drawable.ic_baseline_keyboard_arrow_right_24),
-                                            contentDescription = "arrow",
-                                            modifier = Modifier
-                                                .align(Alignment.CenterVertically)
-                                                .size(28.dp)
-                                                .clickable { navController.navigate(Screen.AllTracks.route) },
-                                            colorFilter = ColorFilter.tint(Color.Gray)
-
-                                        )
-                                        Spacer(modifier = Modifier.weight(0.3f))
-
-                                    }
-                                    LazyRow(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(start = 0.dp, top = 6.dp)
-                                            .height(220.dp)
-                                    ) {
-                                        items(trackState.tracks.takeLast(10)) { tracks ->
-                                            TrackItem(
-                                                navController = navController,
-                                                track = tracks,
-                                                onItemClicked = {
-                                                    navController.navigate(Screen.TrackDetails.route + "/${tracks.id}")
-                                                }
-                                            )
-                                        }
-                                    }
 
 
-                                    Spacer(modifier = Modifier.height(10.dp))
+
+                                    Spacer(modifier = Modifier.height(24.dp))
 
                                     Row(horizontalArrangement = Arrangement.SpaceBetween) {
                                         Text(
@@ -223,8 +187,8 @@ fun SearchScreen(
                                     LazyRow(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(start = 0.dp, top = 6.dp)
-                                            .height(220.dp)
+                                            .padding(start = 2.dp, top = 6.dp)
+                                            .height(210.dp)
                                     ) {
                                         items(artistState.artists.takeLast(10)) { artists ->
                                             ArtistItem(
@@ -237,6 +201,48 @@ fun SearchScreen(
                                         }
                                     }
 
+                                    ////
+                                    Spacer(modifier = Modifier.height(2.dp))
+                                    Row(horizontalArrangement = Arrangement.SpaceBetween) {
+                                        Text(
+                                            text = "Popular Pop Tracks",
+                                            color = Color.White,
+                                            fontSize = 18.sp,
+                                            modifier = Modifier.padding(top = 0.dp, start = 12.dp),
+                                            fontWeight = FontWeight.Bold,
+                                            fontFamily = FontFamily.SansSerif
+                                        )
+                                        Spacer(modifier = Modifier.weight(2.4f))
+                                        Image(
+                                            painter = painterResource(id = R.drawable.ic_baseline_keyboard_arrow_right_24),
+                                            contentDescription = "arrow",
+                                            modifier = Modifier
+                                                .align(Alignment.CenterVertically)
+                                                .size(28.dp)
+                                                .clickable { navController.navigate(Screen.AllTracks.route) },
+                                            colorFilter = ColorFilter.tint(Color.Gray)
+
+                                        )
+                                        Spacer(modifier = Modifier.weight(0.3f))
+
+                                    }
+                                    LazyRow(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(start = 2.dp, top = 6.dp)
+                                            .height(220.dp)
+                                    ) {
+                                        items(trackState.tracks.takeLast(10)) { tracks ->
+                                            TrackItem(
+                                                navController = navController,
+                                                track = tracks,
+                                                onItemClicked = {
+                                                    navController.navigate(Screen.TrackDetails.route + "/${tracks.id}")
+                                                }
+                                            )
+                                        }
+                                    }
+
                                 }
 
 
@@ -244,20 +250,11 @@ fun SearchScreen(
                             SearchWidgetState.OPENED -> {
                                 Column {
                                     Spacer(modifier = Modifier.height(12.dp))
-                                    Text(
-                                        text = "Tracks",
-                                        color = Color.White,
-                                        fontSize = 18.sp,
-                                        modifier = Modifier.padding(top = 0.dp, start = 20.dp),
-                                        fontWeight = FontWeight.Bold,
-                                        fontFamily = FontFamily.SansSerif
-                                    )
 
                                     LazyColumn(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(start = 0.dp, top = 6.dp)
-                                            .height(250.dp)
 
                                     ) {
                                         items(songState.song.take(3)) { song ->
@@ -268,30 +265,15 @@ fun SearchScreen(
                                                     navController.navigate(Screen.TrackDetails.route + "/${song.id}")
                                                 }
                                             )
-                                            if (state.isLoading) {
-                                                CircularProgressIndicator(
-                                                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                                                    color = Color.White
-                                                )
-                                            }
+
                                         }
 
                                     }
-                                    Spacer(modifier = Modifier.height(12.dp))
-                                    Text(
-                                        text = "Artists",
-                                        color = Color.White,
-                                        fontSize = 18.sp,
-                                        modifier = Modifier.padding(top = 0.dp, start = 20.dp),
-                                        fontWeight = FontWeight.Bold,
-                                        fontFamily = FontFamily.SansSerif
-                                    )
-
+                                    Spacer(modifier = Modifier.height(0.dp))
                                     LazyColumn(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(start = 0.dp, top = 6.dp)
-                                            .height(250.dp)
 
                                     ) {
                                         items(state.artist.take(3)) { playlist ->
@@ -302,12 +284,7 @@ fun SearchScreen(
                                                     navController.navigate(Screen.ArtistDetails.route + "/${playlist.id}")
                                                 }
                                             )
-                                            if (state.isLoading) {
-                                                CircularProgressIndicator(
-                                                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                                                    color = Color.White
-                                                )
-                                            }
+
                                         }
 
                                     }
@@ -347,7 +324,7 @@ fun SearchScreen(
 }
 
 @Composable
-fun SearchHeader() {
+fun SearchHeader(text:String) {
     Box(
         modifier = Modifier
             .height(70.dp)
@@ -369,7 +346,7 @@ fun SearchHeader() {
             }
 
             Text(
-                text = "Search",
+                text = text,
                 color = Color.White,
                 fontSize = 22.sp,
                 modifier = Modifier
@@ -415,13 +392,14 @@ fun ArtistSearchItem(
     artist: Test,
     onItemClicked: (artist: Test) -> Unit
 ) {
-    Box(modifier = Modifier.padding(0.dp)) {
+    Box(modifier = Modifier.padding(start = 18.dp)) {
         Row {
             Card(
                 modifier = Modifier
-                    .size(115.dp, 80.dp)
+                    .size(80.dp, 80.dp)
                     .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 10.dp)
-                    .clickable { onItemClicked(artist) },
+                    .clickable { onItemClicked(artist) }
+                    .clip(RoundedCornerShape(100.dp)),
                 elevation = 2.dp
             ) {
                 Box {
@@ -439,6 +417,7 @@ fun ArtistSearchItem(
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .align(Alignment.CenterVertically)
+                    .clickable { onItemClicked(artist) }
             ) {
                 Text(
                     text = artist.name ?: "",
@@ -461,7 +440,7 @@ fun SongItem(
     artist: Song,
     onItemClicked: (artist: Song) -> Unit
 ) {
-    Box(modifier = Modifier.padding(0.dp)) {
+    Box(modifier = Modifier.padding(start = 18.dp)) {
         Row {
             Card(
                 modifier = Modifier
@@ -492,7 +471,8 @@ fun SongItem(
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp,
-                    modifier = Modifier.width(170.dp),
+                    modifier = Modifier.width(170.dp)
+                        .clickable { onItemClicked(artist) },
                     maxLines = 1
                 )
 
