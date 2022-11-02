@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
+import timber.log.Timber
 
 class TrackRepositoryImpl(
     private val napsterApi: NapsterApi,
@@ -20,11 +21,13 @@ class TrackRepositoryImpl(
         emit(Resource.Loading())
 
         val tracksFromDb =  trackDao.getTracks()
+        Timber.d("tracksFromDb: $tracksFromDb")
         emit(Resource.Loading(data = tracksFromDb.map { it.toDomain() }))
 
 
         try {
            val apiResponse = napsterApi.getTracks()
+            Timber.d("tracksResponse: $apiResponse")
             trackDao.deleteTracks()
             trackDao.insertTracks(apiResponse.tracks.map { it.toEntity() })
         } catch (exception: IOException) {
