@@ -34,19 +34,20 @@ class TrackRepositoryImpl(
             emit(
                 Resource.Error(
                     message = "Connection Lost",
-                    data = tracksFromDb.map { it.toDomain() }
+                    data = null
                 )
             )
         } catch (exception: HttpException) {
             emit(
                 Resource.Error(
                     message = exception.message(),
-                    data = tracksFromDb.map { it.toDomain() }
+                    data = null
                 )
             )
         }
 
         val allTracks = trackDao.getTracks().map { it.toDomain() }
+//        val allTracks = napsterApi.getTracks().tracks.map { it.toDomain() }
         emit(Resource.Success(allTracks))
     }
 

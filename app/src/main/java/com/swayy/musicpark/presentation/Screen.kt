@@ -22,4 +22,6 @@ sealed class Screen(val route: String) {
     object PostDetails : Screen("post_details_screen")
     object ArtistDetails : Screen("artists_details")
     object AlbumDetails : Screen("album_details")
+    object SearchScreen : Screen("search_screen")
+
 }

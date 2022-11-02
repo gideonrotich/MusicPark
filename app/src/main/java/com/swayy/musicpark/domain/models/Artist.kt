@@ -5,7 +5,7 @@ import com.swayy.musicpark.data.remote.dto.artist.Bio
 import com.swayy.musicpark.data.remote.dto.artist.Links
 
 data class Artist(
-    val albumGroups: AlbumGroups,
+    val albumGroups: AlbumGroups?,
     val amg: String?,
     val bios: List<Bio>?,
     val blurbs: List<String>?,

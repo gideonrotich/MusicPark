@@ -1,7 +1,10 @@
 package com.swayy.musicpark.data.remote.api
 
+import com.swayy.musicpark.data.remote.dto.Song.SongResponseDto
 import com.swayy.musicpark.data.remote.dto.album.AlbumResponseDto
 import com.swayy.musicpark.data.remote.dto.artist.ArtistResponseDto
+import com.swayy.musicpark.data.remote.dto.artist.test.TestResponseDto
+import com.swayy.musicpark.data.remote.dto.genre.GenreResponseDto
 import com.swayy.musicpark.data.remote.dto.playlist.PlaylistResponseDto
 import com.swayy.musicpark.data.remote.dto.posts.PostsResponseDto
 import com.swayy.musicpark.data.remote.dto.tracks.TrackResponseDto
@@ -99,4 +102,28 @@ interface NapsterApi {
         @Path("id") id: String,
         @Query("apikey") apikey: String = Constants.API_KEY
     ): ArtistResponseDto
+
+    //search artist
+    @GET("v2.2/search")
+    suspend fun getArtistSearch(
+        @Query("apikey") apikey: String = Constants.API_KEY,
+        @Query("limit") limit: String = "3",
+        @Query("query") artist:String,
+        @Query("type") type: String = "artist"
+    ):TestResponseDto
+
+    //search an artist
+    @GET("v2.2/search")
+    suspend fun getSong(
+        @Query("apikey") apikey: String = Constants.API_KEY,
+        @Query("limit") limit: String = "3",
+        @Query("query") song:String,
+        @Query("type") type: String = "track"
+    ):SongResponseDto
+
+    //get genres
+    @GET("v2.2/genres")
+    suspend fun getGenres(
+        @Query("apikey") apikey: String = Constants.API_KEY,
+    ):GenreResponseDto
 }

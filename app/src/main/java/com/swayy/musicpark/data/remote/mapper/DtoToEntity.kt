@@ -2,10 +2,15 @@ package com.swayy.musicpark.data.remote.mapper
 
 import com.swayy.musicpark.data.local.entity.TrackEntity
 import com.swayy.musicpark.data.remote.dto.album.Album
+import com.swayy.musicpark.data.remote.dto.artist.AlbumGroups
 import com.swayy.musicpark.data.remote.dto.artist.Artist
+import com.swayy.musicpark.data.remote.dto.artist.test.Data
+import com.swayy.musicpark.data.remote.dto.genre.Genre
 import com.swayy.musicpark.data.remote.dto.posts.Post
 import com.swayy.musicpark.data.remote.dto.tracks.Track
 import com.swayy.musicpark.domain.models.Playlist
+import com.swayy.musicpark.domain.models.Song
+import com.swayy.musicpark.domain.models.Test
 
 internal fun Track.toEntity(): TrackEntity {
     return TrackEntity(
@@ -87,6 +92,51 @@ internal fun Artist.toDomain(): com.swayy.musicpark.domain.models.Artist {
         amg,
         bios,
         blurbs,
+        href,
+        id,
+        links,
+        name,
+        shortcut,
+        type
+    )
+}
+
+internal fun com.swayy.musicpark.data.remote.dto.artist.test.Artist.toDomain(): Test {
+    return Test(albumGroups, amg, bios, blurbs, href, id, links, name, shortcut, type)
+}
+
+internal fun com.swayy.musicpark.data.remote.dto.Song.Track.toDomain(): Song {
+    return Song(
+        albumId,
+        albumName,
+        amg,
+        artistId,
+        artistName,
+        blurbs,
+        contributors,
+        disc,
+        formats,
+        href,
+        id,
+        index,
+        isAvailableInAtmos,
+        isAvailableInHiRes,
+        isExplicit,
+        isStreamable,
+        isrc,
+        links,
+        losslessFormats,
+        name,
+        playbackSeconds,
+        previewURL,
+        shortcut,
+        type
+    )
+}
+
+internal fun Genre.toDomain(): com.swayy.musicpark.domain.models.Genre {
+    return com.swayy.musicpark.domain.models.Genre(
+        description,
         href,
         id,
         links,

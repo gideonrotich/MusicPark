@@ -31,7 +31,7 @@ class Converters(
 
     @TypeConverter
     fun toContributor(str: String): Contributors {
-        return Gson().fromJson(str, object : TypeToken<String>() {}.type)
+        return Gson().fromJson(str, object : TypeToken<Contributors>() {}.type)
     }
 
     // format converter
@@ -42,7 +42,7 @@ class Converters(
 
     @TypeConverter
     fun toFormat(str: String?): List<Format>? {
-        return Gson().fromJson(str, object : TypeToken<List<String>>() {}.type)
+        return Gson().fromJson(str, object : TypeToken<List<Format>>() {}.type)
     }
 
     @TypeConverter
@@ -52,7 +52,7 @@ class Converters(
 
     @TypeConverter
     fun toLink(str: String?): Links {
-        return Gson().fromJson(str, object : TypeToken<String>() {}.type)
+        return Gson().fromJson(str, object : TypeToken<Links>() {}.type)
     }
 
     // lossformat converter
@@ -63,6 +63,6 @@ class Converters(
 
     @TypeConverter
     fun toLossFormat(str: String?): List<LosslessFormat>? {
-        return Gson().fromJson(str, object : TypeToken<List<String>>() {}.type)
+        return Gson().fromJson(str, object : TypeToken<List<LosslessFormat>>() {}.type)
     }
 }

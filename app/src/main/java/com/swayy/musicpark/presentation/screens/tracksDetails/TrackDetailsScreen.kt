@@ -40,7 +40,7 @@ fun TrackDetailsScreen(
             track.forEach {
                 SongScreenContent(
                     songName = it.name,
-                    albumName = it.albumName,
+                    albumName = it.artistName,
                     isSongPlaying = true,
                     //imagePainter = I,
                     dominantColor = Color.Blue,

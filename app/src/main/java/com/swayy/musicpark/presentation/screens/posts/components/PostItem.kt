@@ -81,7 +81,9 @@ fun PostItem(
                     maxLines = 1
                 )
                 Spacer(modifier = Modifier.height(2.dp))
-                LazyColumn(){
+                LazyColumn(
+                    modifier = Modifier.height(30.dp)
+                ){
                     items(items = post.content.take(1)){
                         Text(
                             text = it.content,
