@@ -56,7 +56,8 @@ object AppModule {
         napsterDatabase: NapsterDatabase
     ): TrackRepository {
         return TrackRepositoryImpl(
-            napsterApi = napsterApi
+            napsterApi = napsterApi,
+            trackDao = napsterDatabase.TrackDao()
         )
     }
 
