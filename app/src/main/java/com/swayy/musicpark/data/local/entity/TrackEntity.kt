@@ -2,12 +2,13 @@ package com.swayy.musicpark.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Index
 import com.swayy.musicpark.data.remote.dto.tracks.Contributors
 import com.swayy.musicpark.data.remote.dto.tracks.Format
 import com.swayy.musicpark.data.remote.dto.tracks.Links
 import com.swayy.musicpark.data.remote.dto.tracks.LosslessFormat
 
-@Entity(tableName = "tracks_table")
+@Entity(indices = [Index(value = ["albumId"], unique = true)])
 data class TrackEntity(
     val albumId: String,
     val albumName: String,

@@ -8,13 +8,14 @@ import com.swayy.musicpark.data.local.entity.TrackEntity
 
 
 @Dao
-interface TrackDao {
-    @Query("SELECT * FROM tracks_table")
+interface TrackDao : BaseDao<TrackEntity> {
+
+    @Query("SELECT * FROM TrackEntity")
     suspend fun getTracks():List<TrackEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTracks(list: List<TrackEntity>)
 
-    @Query("DELETE FROM tracks_table")
+    @Query("DELETE FROM TrackEntity")
     suspend fun deleteTracks()
 }
