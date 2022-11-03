@@ -1,5 +1,7 @@
 package com.swayy.musicpark.presentation.screens.tracksDetails
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,59 +23,95 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.insets.systemBarsPadding
+import coil.ImageLoader
+import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import coil.size.Size
+import coil.transform.Transformation
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
+import com.google.accompanist.coil.rememberCoilPainter
 import com.swayy.musicpark.R
 import com.swayy.musicpark.ui.theme.DarkBlue
+import kotlinx.coroutines.launch
 
 @Composable
 fun TrackDetailsScreen(
     trackDetailsViewModel: TrackDetailsViewModel = hiltViewModel()
 ) {
 
-    val context = LocalContext.current
 
     val trackDetailsState = trackDetailsViewModel.state.value
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        trackDetailsState.trackDetails.let { track->
+        trackDetailsState.trackDetails.let { track ->
 
             track.forEach {
+                val context = LocalContext.current
+                val backgroundColor = MaterialTheme.colors.background
+
+                var dominantColor by remember {
+                    mutableStateOf(backgroundColor)
+                }
+
+                val image =
+                    "https://api.napster.com/imageserver/v2/albums/${it.albumId}/images/500x500.jpg"
+
+
+                //test
+                val painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(data = image).apply(block = fun ImageRequest.Builder.() {
+                            crossfade(true)
+                        }).build()
+                )
+
+                LaunchedEffect(key1 = painter) {
+                    launch {
+                        val imageDrawable = painter.imageLoader.execute(painter.request).drawable
+                        trackDetailsViewModel.getImageDominantSwatch(imageDrawable!!) {
+                            dominantColor = Color(it.rgb)
+
+                        }
+                    }
+                }
+
                 SongScreenContent(
                     songName = it.name,
                     albumName = it.artistName,
+                    id = it.albumId,
                     isSongPlaying = true,
                     imagePainter = painterResource(id = R.drawable.heart),
-                    dominantColor = Color.Blue,
+                    dominantColor = dominantColor,
                     playbackProgress = 1F,
                     currentTime = "0:53",
                     totalTime = "5:14",
                     // playPauseIcon =,
-                    yOffset = 2 ,
+                    yOffset = 2,
                     playOrToggleSong = { /*TODO*/ },
                     playNextSong = { /*TODO*/ },
                     playPreviousSong = { /*TODO*/ },
                     onSliderChange = {},
                     onSliderChangeFinished = { /*TODO*/ },
                     onRewind = { /*TODO*/ },
-                    onForward = { /*TODO*/ }){
+                    onForward = { /*TODO*/ }) {
 
                 }
 
             }
-            }
+        }
 
     }
-
 
 
 }
@@ -83,13 +121,14 @@ fun TrackDetailsScreen(
 fun SongScreenContent(
     songName: String,
     albumName: String,
+    id: String,
     isSongPlaying: Boolean,
     imagePainter: Painter,
     dominantColor: Color,
     playbackProgress: Float,
     currentTime: String,
     totalTime: String,
-   // @DrawableRes playPauseIcon: Int,
+    // @DrawableRes playPauseIcon: Int,
     yOffset: Int,
     playOrToggleSong: () -> Unit,
     playNextSong: () -> Unit,
@@ -106,7 +145,15 @@ fun SongScreenContent(
     val gradientColors = if (isSystemInDarkTheme()) {
         listOf(
             dominantColor,
-            MaterialTheme.colors.background
+            dominantColor.copy(alpha = 0.9F),
+            dominantColor.copy(alpha = 0.8F),
+            dominantColor.copy(alpha = 0.7F),
+            dominantColor.copy(alpha = 0.6F),
+            dominantColor.copy(alpha = 0.5F),
+            dominantColor.copy(alpha = 0.4F),
+            dominantColor.copy(alpha = 0.3F),
+            dominantColor.copy(alpha = 0.2F),
+            dominantColor.copy(alpha = 0.1F),
         )
     } else {
         listOf(
@@ -171,7 +218,11 @@ fun SongScreenContent(
 
                         ) {
 
-                           VinylAnimation(painter = imagePainter, isSongPlaying = isSongPlaying)
+                            VinylAnimation(
+                                painter = imagePainter,
+                                isSongPlaying = isSongPlaying,
+                                id = id
+                            )
                         }
 
                         Text(
@@ -290,6 +341,7 @@ fun SongScreenContent(
 
 @Composable
 fun VinylAnimation(
+    id: String,
     modifier: Modifier = Modifier,
     isSongPlaying: Boolean = true,
     painter: Painter
@@ -328,7 +380,7 @@ fun VinylAnimation(
         }
     }
 
-    Vinyl(painter = painter, rotationDegrees = rotation.value)
+    Vinyl(painter = painter, rotationDegrees = rotation.value, id = id)
 }
 
 
@@ -336,7 +388,8 @@ fun VinylAnimation(
 fun Vinyl(
     modifier: Modifier = Modifier,
     rotationDegrees: Float = 0f,
-    painter: Painter
+    painter: Painter,
+    id: String
 ) {
     Box(
         modifier = modifier
@@ -353,15 +406,16 @@ fun Vinyl(
         )
 
         // Vinyl song cover
-        Image(
+        AsyncImage(
             modifier = Modifier
                 .fillMaxSize(0.5f)
                 .rotate(rotationDegrees)
                 .aspectRatio(1.0f)
                 .align(Alignment.Center)
                 .clip(CircleShape),
-            painter = painter,
-            contentDescription = "Song cover"
+            model = "https://api.napster.com/imageserver/v2/albums/${id}/images/500x500.jpg",
+            contentDescription = "Song cover",
+            contentScale = ContentScale.FillBounds
         )
     }
 }
