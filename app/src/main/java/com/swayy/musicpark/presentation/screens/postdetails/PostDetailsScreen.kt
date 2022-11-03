@@ -11,9 +11,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -24,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.*
+import coil.request.ImageRequest
 import com.swayy.musicpark.R
 import com.swayy.musicpark.presentation.Screen
 import com.swayy.musicpark.presentation.screens.tracks.components.AllTracksItem
@@ -39,20 +44,68 @@ fun PostDetailsScreen(
     val postDetailsState = postDetailsViewModel.state.value
     val playlistState = playlistViewModel.state.value
 
+    val backgroundColor = MaterialTheme.colors.background
+
+    var dominantColor by remember {
+        mutableStateOf(backgroundColor)
+    }
+
+    val gradientColors = if (isSystemInDarkTheme()) {
+        listOf(
+            dominantColor,
+            colorResource(id = R.color.darkbluetwo),
+            colorResource(id = R.color.darkbluetwo),
+            colorResource(id = R.color.darkbluetwo)
+        )
+    } else {
+        listOf(
+            MaterialTheme.colors.background,
+            MaterialTheme.colors.background
+        )
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                colorResource(id = R.color.darkbluetwo)
+                Brush.verticalGradient(
+                    colors = gradientColors,
+                    endY = LocalConfiguration.current.screenHeightDp.toFloat() *
+                            LocalDensity.current.density
+                )
             )
     ) {
 
         postDetailsState.postDetails.let { post ->
             post.forEach {
 
-                Column(modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())) {
+                val image =
+                    "https://api.napster.com/imageserver/v2/imagesets/${it.image}/images/500x500.jpg"
+
+                val painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(data = image).apply(block = fun ImageRequest.Builder.() {
+                            crossfade(true)
+                        }).build()
+                )
+
+                LaunchedEffect(key1 = painter) {
+                    launch {
+                        val imageDrawable = painter.imageLoader.execute(painter.request).drawable
+                        postDetailsViewModel.getImageDominantSwatch(imageDrawable!!) {
+                            dominantColor = Color(it.rgb)
+
+                        }
+                    }
+                }
+
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Spacer(modifier = Modifier.height(31.dp))
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()

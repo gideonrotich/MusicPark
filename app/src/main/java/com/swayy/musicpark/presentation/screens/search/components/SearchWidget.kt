@@ -36,7 +36,7 @@ fun MainAppBar(
 ) {
     Box(
         modifier
-            .padding(start = 30.dp, end = 30.dp)
+            .padding(start = 24.dp, end = 24.dp)
             .background(colorResource(id = R.color.darkbluetwo))) {
         when (searchWidgetState) {
             SearchWidgetState.CLOSED -> {

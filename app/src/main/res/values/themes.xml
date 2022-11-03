@@ -3,5 +3,7 @@
 
     <style name="Theme.MusicPark" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">#1C2C64</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>

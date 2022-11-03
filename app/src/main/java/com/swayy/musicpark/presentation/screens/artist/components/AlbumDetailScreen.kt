@@ -10,13 +10,17 @@ import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,10 +30,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.swayy.musicpark.R
 import com.swayy.musicpark.presentation.Screen
 import com.swayy.musicpark.presentation.screens.postdetails.PlaylistItem
 import com.swayy.musicpark.presentation.screens.postdetails.PostDetailsViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun AlbumDetailScreen(
@@ -40,11 +47,35 @@ fun AlbumDetailScreen(
     val albumlistState = albumDetailViewModel.state.value
     val musicState = musicViewModel.state.value
 
+    val backgroundColor = MaterialTheme.colors.background
+
+    var dominantColor by remember {
+        mutableStateOf(backgroundColor)
+    }
+
+    val gradientColors = if (isSystemInDarkTheme()) {
+        listOf(
+            dominantColor,
+            colorResource(id = R.color.darkbluetwo),
+            colorResource(id = R.color.darkbluetwo),
+            colorResource(id = R.color.darkbluetwo)
+        )
+    } else {
+        listOf(
+            MaterialTheme.colors.background,
+            MaterialTheme.colors.background
+        )
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                colorResource(id = R.color.darkbluetwo)
+                Brush.verticalGradient(
+                    colors = gradientColors,
+                    endY = LocalConfiguration.current.screenHeightDp.toFloat() *
+                            LocalDensity.current.density
+                )
             )
             .verticalScroll(rememberScrollState())
     ) {
@@ -52,8 +83,28 @@ fun AlbumDetailScreen(
         albumlistState.album.let { post ->
             post.forEach {
 
+                val image = "https://api.napster.com/imageserver/v2/albums/${it.id}/images/500x500.jpg"
+
+
+                val painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(data = image).apply(block = fun ImageRequest.Builder.() {
+                            crossfade(true)
+                        }).build()
+                )
+
+                LaunchedEffect(key1 = painter) {
+                    launch {
+                        val imageDrawable = painter.imageLoader.execute(painter.request).drawable
+                        albumDetailViewModel.getImageDominantSwatch(imageDrawable!!) {
+                            dominantColor = Color(it.rgb)
+
+                        }
+                    }
+                }
 
                 Column(modifier = Modifier.fillMaxSize()) {
+                    Spacer(modifier = Modifier.height(31.dp))
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()

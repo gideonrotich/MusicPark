@@ -156,7 +156,7 @@ fun SearchScreen(
                                     LazyHorizontalGrid(GridCells.Fixed(2),
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(start = 2.dp, top = 6.dp)
+                                            .padding(start = 12.dp, top = 6.dp)
                                             .height(200.dp)
                                     ) {
                                         items(genreState.genre) { tracks ->
@@ -207,7 +207,7 @@ fun SearchScreen(
                                     LazyRow(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(start = 2.dp, top = 6.dp)
+                                            .padding(start = 4.dp, top = 6.dp)
                                             .height(210.dp)
                                     ) {
                                         items(artistState.artists.takeLast(10)) { artists ->
@@ -345,6 +345,7 @@ fun SearchScreen(
 
 @Composable
 fun SearchHeader(text:String) {
+    Spacer(modifier = Modifier.height(31.dp))
     Box(
         modifier = Modifier
             .height(70.dp)

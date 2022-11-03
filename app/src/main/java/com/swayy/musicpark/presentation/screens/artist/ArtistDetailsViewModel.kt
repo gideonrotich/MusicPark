@@ -1,10 +1,14 @@
 package com.swayy.musicpark.presentation.screens.artist
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.palette.graphics.Palette
 import com.swayy.musicpark.domain.use_cases.GetArtistDetailsUseCase
 import com.swayy.musicpark.presentation.screens.artist.components.ArtistDetailsListState
 import com.swayy.musicpark.presentation.screens.postdetails.PostDetailsListState
@@ -47,4 +51,14 @@ class ArtistDetailsViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+    fun getImageDominantSwatch(drawable: Drawable, onGenerated: (Palette.Swatch) -> Unit) {
+        val bitmap = (drawable as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+        Palette.from(bitmap).generate { palette ->
+            palette?.dominantSwatch?.let {
+                onGenerated(it)
+            }
+        }
+    }
+
 }

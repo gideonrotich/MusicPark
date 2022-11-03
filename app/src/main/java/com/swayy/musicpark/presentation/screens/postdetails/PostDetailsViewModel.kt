@@ -52,6 +52,13 @@ class PostDetailsViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-
+    fun getImageDominantSwatch(drawable: Drawable, onGenerated: (Palette.Swatch) -> Unit) {
+        val bitmap = (drawable as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+        Palette.from(bitmap).generate { palette ->
+            palette?.dominantSwatch?.let {
+                onGenerated(it)
+            }
+        }
+    }
 
 }

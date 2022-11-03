@@ -21,10 +21,12 @@ import java.util.*
 
 @Composable
 fun TopBar() {
+    Spacer(modifier = Modifier.height(31.dp))
     Box(
         modifier = Modifier
             .height(70.dp)
             .background(colorResource(id = R.color.darkbluetwo))
+
     ) {
         Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceAround) {
             Column(
@@ -45,7 +47,9 @@ fun TopBar() {
                 text = getGreetingMessage(),
                 color = Color.White,
                 fontSize = 22.sp,
-                modifier = Modifier.padding(top = 0.dp, start = 10.dp).align(Alignment.CenterVertically),
+                modifier = Modifier
+                    .padding(top = 0.dp, start = 10.dp)
+                    .align(Alignment.CenterVertically),
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.SansSerif
             )

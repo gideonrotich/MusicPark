@@ -40,7 +40,7 @@ interface NapsterApi {
     @GET("v2.2/artists/top")
     suspend fun getArtists(
         @Query("limit") limit: String = "20",
-        @Query("range") range: String = "day",
+        @Query("range") range: String = "week",
         @Query("apikey") apikey: String = Constants.API_KEY
     ): ArtistResponseDto
 

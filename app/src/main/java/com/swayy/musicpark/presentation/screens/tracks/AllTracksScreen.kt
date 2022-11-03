@@ -48,6 +48,7 @@ fun AllTracksScreen(
                 .fillMaxSize()
                 .padding(top = 10.dp)
         ) {
+            Spacer(modifier = Modifier.height(31.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

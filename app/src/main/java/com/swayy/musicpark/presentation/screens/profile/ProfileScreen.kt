@@ -23,6 +23,7 @@ import com.swayy.musicpark.presentation.screens.search.SearchHeader
 fun ProfileScreen(
     navController: NavController,
 ) {
+    Spacer(modifier = Modifier.height(31.dp))
     Box(
         modifier = Modifier
             .fillMaxSize()
