@@ -1,5 +1,6 @@
 package com.swayy.musicpark.presentation.screens.tracksDetails
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,33 +9,42 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.rounded.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.systemBarsPadding
 import com.swayy.musicpark.R
+import com.swayy.musicpark.ui.theme.DarkBlue
 
 @Composable
 fun TrackDetailsScreen(
     trackDetailsViewModel: TrackDetailsViewModel = hiltViewModel()
 ) {
 
+    val context = LocalContext.current
+
     val trackDetailsState = trackDetailsViewModel.state.value
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
         trackDetailsState.trackDetails.let { track->
 
             track.forEach {
@@ -42,7 +52,7 @@ fun TrackDetailsScreen(
                     songName = it.name,
                     albumName = it.artistName,
                     isSongPlaying = true,
-                    //imagePainter = I,
+                    imagePainter = painterResource(id = R.drawable.heart),
                     dominantColor = Color.Blue,
                     playbackProgress = 1F,
                     currentTime = "0:53",
@@ -62,9 +72,6 @@ fun TrackDetailsScreen(
             }
             }
 
-
-
-
     }
 
 
@@ -77,7 +84,7 @@ fun SongScreenContent(
     songName: String,
     albumName: String,
     isSongPlaying: Boolean,
-    //imagePainter: Painter,
+    imagePainter: Painter,
     dominantColor: Color,
     playbackProgress: Float,
     currentTime: String,
@@ -134,7 +141,8 @@ fun SongScreenContent(
                     .background(
                         Brush.verticalGradient(
                             colors = gradientColors,
-                            endY = LocalConfiguration.current.screenHeightDp.toFloat() * LocalDensity.current.density
+                            endY = LocalConfiguration.current.screenHeightDp.toFloat() *
+                                    LocalDensity.current.density
                         )
                     )
                     .fillMaxSize()
@@ -163,7 +171,7 @@ fun SongScreenContent(
 
                         ) {
 
-                           // VinylAnimation(painter = imagePainter, isSongPlaying = isSongPlaying)
+                           VinylAnimation(painter = imagePainter, isSongPlaying = isSongPlaying)
                         }
 
                         Text(
@@ -244,7 +252,7 @@ fun SongScreenContent(
                                     .size(32.dp)
                             )
                             Icon(
-                                painter = painterResource(R.drawable.ic_baseline_home_24),
+                                imageVector = Icons.Default.Pause,
                                 contentDescription = "Play",
                                 tint = MaterialTheme.colors.background,
                                 modifier = Modifier
@@ -277,5 +285,83 @@ fun SongScreenContent(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun VinylAnimation(
+    modifier: Modifier = Modifier,
+    isSongPlaying: Boolean = true,
+    painter: Painter
+) {
+    var currentRotation by remember {
+        mutableStateOf(0f)
+    }
+
+    val rotation = remember {
+        Animatable(currentRotation)
+    }
+
+    LaunchedEffect(isSongPlaying) {
+        if (isSongPlaying) {
+            rotation.animateTo(
+                targetValue = currentRotation + 360f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(3000, easing = LinearEasing),
+                    repeatMode = RepeatMode.Restart
+                )
+            ) {
+                currentRotation = value
+            }
+        } else {
+            if (currentRotation > 0f) {
+                rotation.animateTo(
+                    targetValue = currentRotation + 50,
+                    animationSpec = tween(
+                        1250,
+                        easing = LinearOutSlowInEasing
+                    )
+                ) {
+                    currentRotation = value
+                }
+            }
+        }
+    }
+
+    Vinyl(painter = painter, rotationDegrees = rotation.value)
+}
+
+
+@Composable
+fun Vinyl(
+    modifier: Modifier = Modifier,
+    rotationDegrees: Float = 0f,
+    painter: Painter
+) {
+    Box(
+        modifier = modifier
+            .aspectRatio(1.0f)
+            .clip(CircleShape)
+    ) {
+        // Vinyl background
+        Image(
+            modifier = Modifier
+                .fillMaxSize()
+                .rotate(rotationDegrees),
+            painter = painterResource(id = R.drawable.vinyl_background),
+            contentDescription = "Vinyl Background"
+        )
+
+        // Vinyl song cover
+        Image(
+            modifier = Modifier
+                .fillMaxSize(0.5f)
+                .rotate(rotationDegrees)
+                .aspectRatio(1.0f)
+                .align(Alignment.Center)
+                .clip(CircleShape),
+            painter = painter,
+            contentDescription = "Song cover"
+        )
     }
 }
