@@ -4,11 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.swayy.musicpark.data.local.entity.AlbumEntity
 import com.swayy.musicpark.data.local.entity.ArtistEntity
 
 
 @Dao
-interface ArtistDao {
+interface ArtistDao : BaseDao<ArtistEntity>{
     @Query("SELECT * FROM artist_table")
     suspend fun getArtist():List<ArtistEntity>
 

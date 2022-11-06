@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.swayy.musicpark.data.local.entity.AlbumEntity
 
 @Dao
-interface AlbumDao {
+interface AlbumDao : BaseDao<AlbumEntity> {
     @Query("SELECT * FROM album_table")
     suspend fun getAlbums():List<AlbumEntity>
 

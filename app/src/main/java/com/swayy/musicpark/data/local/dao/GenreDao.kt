@@ -8,7 +8,7 @@ import com.swayy.musicpark.data.local.entity.GenreEntity
 
 
 @Dao
-interface GenreDao {
+interface GenreDao: BaseDao<GenreEntity>{
     @Query("SELECT * FROM genre_table")
     suspend fun getGenre():List<GenreEntity>
 
