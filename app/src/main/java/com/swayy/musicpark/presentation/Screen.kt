@@ -23,5 +23,5 @@ sealed class Screen(val route: String) {
     object ArtistDetails : Screen("artists_details")
     object AlbumDetails : Screen("album_details")
     object SearchScreen : Screen("search_screen")
-
+    object LoginScreen : Screen("login_screen")
 }

@@ -81,7 +81,7 @@ fun HomeScreen(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .size(28.dp)
-                        .clickable { navController.navigate(Screen.AllTracks.route) },
+                        .clickable { navController.navigate(Screen.LoginScreen.route) },
                     colorFilter = ColorFilter.tint(Color.Gray)
 
                 )

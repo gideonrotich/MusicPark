@@ -9,6 +9,7 @@ import com.swayy.musicpark.domain.models.Track
 import com.swayy.musicpark.presentation.Screen
 import com.swayy.musicpark.presentation.screens.artist.ArtistDetailsScreen
 import com.swayy.musicpark.presentation.screens.artist.components.AlbumDetailScreen
+import com.swayy.musicpark.presentation.screens.auth.login.LoginScreen
 import com.swayy.musicpark.presentation.screens.postdetails.PostDetailsScreen
 import com.swayy.musicpark.presentation.screens.profile.ProfileScreen
 import com.swayy.musicpark.presentation.screens.search.SearchScreen
@@ -56,6 +57,12 @@ fun NavigationGraph(navController: NavHostController) {
             route = Screen.AllTracks.route
         ){
             AllTracksScreen(navController = navController)
+        }
+
+        composable(
+            route = Screen.LoginScreen.route
+        ){
+            LoginScreen()
         }
 
     }
