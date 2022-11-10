@@ -48,7 +48,7 @@ fun PostItem(
                     AsyncImage(
                         model = "https://api.napster.com/imageserver/v2/imagesets/${post.image}/images/500x500.jpg",
                         contentDescription = "",
-                        contentScale = ContentScale.Crop,
+                        contentScale = ContentScale.FillBounds,
                     )
                     Row(
                         modifier = Modifier

@@ -126,4 +126,11 @@ interface NapsterApi {
     suspend fun getGenres(
         @Query("apikey") apikey: String = Constants.API_KEY,
     ):GenreResponseDto
+
+    //get genre details
+    @GET("v2.2/genres/{id}")
+    suspend fun getGenreDetails(
+        @Path("id") id: String,
+        @Query("apikey") apikey: String = Constants.API_KEY
+    ):GenreResponseDto
 }

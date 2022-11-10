@@ -2,6 +2,8 @@ package com.swayy.musicpark.presentation.screens.tracksDetails
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.media.AudioManager
+import android.media.MediaPlayer
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -90,6 +92,7 @@ fun TrackDetailsScreen(
                     songName = it.name,
                     albumName = it.artistName,
                     id = it.albumId,
+                    url = it.previewURL,
                     isSongPlaying = true,
                     imagePainter = painterResource(id = R.drawable.heart),
                     dominantColor = dominantColor,
@@ -105,7 +108,6 @@ fun TrackDetailsScreen(
                     onSliderChangeFinished = { /*TODO*/ },
                     onRewind = { /*TODO*/ },
                     onForward = { /*TODO*/ }) {
-
                 }
 
             }
@@ -122,6 +124,7 @@ fun SongScreenContent(
     songName: String,
     albumName: String,
     id: String,
+    url: String,
     isSongPlaying: Boolean,
     imagePainter: Painter,
     dominantColor: Color,
@@ -302,6 +305,15 @@ fun SongScreenContent(
                                     .padding(12.dp)
                                     .size(32.dp)
                             )
+
+                            //testing
+                            val ctx = LocalContext.current
+                            val mediaPlayer = MediaPlayer()
+
+                            var audioUrl = url
+                            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+
+
                             Icon(
                                 imageVector = Icons.Default.Pause,
                                 contentDescription = "Play",
@@ -309,7 +321,14 @@ fun SongScreenContent(
                                 modifier = Modifier
                                     .clip(CircleShape)
                                     .background(MaterialTheme.colors.onBackground)
-                                    .clickable(onClick = playOrToggleSong)
+                                    .clickable(onClick =
+                                    {
+                                        mediaPlayer.setDataSource(audioUrl)
+
+                                        mediaPlayer.prepare()
+
+                                        mediaPlayer.start()
+                                    })
                                     .size(64.dp)
                                     .padding(8.dp)
                             )
