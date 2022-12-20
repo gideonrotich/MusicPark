@@ -1,21 +1,38 @@
-# Rugby Ranker 🏉
+<h1 align="center">
+<br>
+  <img src="screenshots/kotlin.png" width="300" alt="Kotlin Pokedex">
+<br>
+<br>
+Pokedex app built with Kotlin
+</h1>
 
-[![GitHub Actions](https://github.com/ricknout/rugby-ranker/workflows/workflow/badge.svg)](.github/workflows/workflow.yml)
-[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
-
-Rugby Ranker is a **work-in-progress** Android app for viewing and predicting the latest World Rugby rankings.
-
-It displays the latest international rankings, live scores, fixtures, results and news/videos. It makes use of the [World Rugby 'Points Exchange' system](https://www.world.rugby/rankings/explanation) in order to predict changes in team positions and points.
+<p align="center">
+  <a href="https://github.com/KotlinBy/awesome-kotlin">
+    <img src="https://kotlin.link/awesome-kotlin.svg" alt="Awesome Kotlin">
+  </a>
+  
+  <a href="https://github.com/mrcsxsiq/Kotlin-Pokedex/actions">
+    <img src="https://github.com/mrcsxsiq/Kotlin-Pokedex/workflows/Android%20CI/badge.svg" alt="Android CI">
+  </a>
+  
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-red.svg" alt="License MIT">
+  </a>
+  
+  <a href="https://github.com/mrcsxsiq/Kotlin-Pokedex/stargazers">
+    <img src="https://img.shields.io/badge/Say%20Thanks-👍-1EAEDB.svg" alt="Say thanks">
+  </a>
+</p>
 
 <br>
 
-| Rankings | Drawer | Predict | Predictions |
+| HOME | Player | Search | Predictions |
 | ------ | ----- | ------ | ----- |
-| ![Rankings](art/screenshots/screenshot-1.png) | ![Predict](art/screenshots/screenshot-2.png) | ![Predictions](art/screenshots/screenshot-3.png) | ![Live](art/screenshots/screenshot-4.png) |
+| ![Rankings](screenshot/one.png) | ![Predict](screenshot/two.png) | ![Predictions](screenshot/three.png) | ![Live](screenshot/four.png) |
 
 | Matches | Live | News | Info |
 | ------ | ----- | ------ | ----- |
-| ![Fixtures](art/screenshots/screenshot-5.png) | ![Results](art/screenshots/screenshot-6.png) | ![News](art/screenshots/screenshot-7.png) | ![Info](art/screenshots/screenshot-8.png) |
+| ![Fixtures](screenshot/five.png) | ![Results](screenshot/six.png) | ![News](screenshot/seven.png) | ![Info](screenshot/eight.png) |
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.ricknout.rugbyranker" target="_blank">
