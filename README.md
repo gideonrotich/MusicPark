@@ -28,7 +28,7 @@ Music player app built with Kotlin
 
 | HOME | Player | Search | Predictions |
 | ------ | ----- | ------ | ----- |
-| ![Rankings](screenshot/one.png width="280") | ![Predict](screenshot/two.png) | ![Predictions](screenshot/three.png) | ![Live](screenshot/four.png) |
+| ![Rankings](screenshot/one.png) | ![Predict](screenshot/two.png) | ![Predictions](screenshot/three.png) | ![Live](screenshot/four.png) |
 
 | Matches | Live | News | Info |
 | ------ | ----- | ------ | ----- |
