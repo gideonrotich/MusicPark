@@ -3,7 +3,7 @@
   <img src="screenshot/kotlin.png" width="300" alt="Kotlin Pokedex">
 <br>
 <br>
-Pokedex app built with Kotlin
+Music player app built with Kotlin
 </h1>
 
 <p align="center">
@@ -40,8 +40,7 @@ Pokedex app built with Kotlin
   </a>
 </p>
 
-# The-Movie-DB-Kotlin
-The Movie DB app using Kotlin
+# Music
 
 ![alt text](https://developer.android.com/topic/libraries/architecture/images/final-architecture.png)
 
