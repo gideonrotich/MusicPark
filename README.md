@@ -40,8 +40,6 @@ Music player app built with Kotlin
   </a>
 </p>
 
-# Music
-
 ![alt text](https://developer.android.com/topic/libraries/architecture/images/final-architecture.png)
 
 
