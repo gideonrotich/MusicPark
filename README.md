@@ -1,11 +1,28 @@
-# Rugby Ranker 🏉
+<h1 align="center">
+<br>
+  <img src="screenshots/kotlin.png" width="300" alt="Kotlin Pokedex">
+<br>
+<br>
+Pokedex app built with Kotlin
+</h1>
 
-[![GitHub Actions](https://github.com/ricknout/rugby-ranker/workflows/workflow/badge.svg)](.github/workflows/workflow.yml)
-[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
-
-Rugby Ranker is a **work-in-progress** Android app for viewing and predicting the latest World Rugby rankings.
-
-It displays the latest international rankings, live scores, fixtures, results and news/videos. It makes use of the [World Rugby 'Points Exchange' system](https://www.world.rugby/rankings/explanation) in order to predict changes in team positions and points.
+<p align="center">
+  <a href="https://github.com/KotlinBy/awesome-kotlin">
+    <img src="https://kotlin.link/awesome-kotlin.svg" alt="Awesome Kotlin">
+  </a>
+  
+  <a href="https://github.com/mrcsxsiq/Kotlin-Pokedex/actions">
+    <img src="https://github.com/mrcsxsiq/Kotlin-Pokedex/workflows/Android%20CI/badge.svg" alt="Android CI">
+  </a>
+  
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-red.svg" alt="License MIT">
+  </a>
+  
+  <a href="https://github.com/mrcsxsiq/Kotlin-Pokedex/stargazers">
+    <img src="https://img.shields.io/badge/Say%20Thanks-👍-1EAEDB.svg" alt="Say thanks">
+  </a>
+</p>
 
 <br>
 
