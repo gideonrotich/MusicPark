@@ -15,7 +15,7 @@ It displays the latest international rankings, live scores, fixtures, results an
 
 | Matches | Live | News | Info |
 | ------ | ----- | ------ | ----- |
-| ![Fixtures](art/screenshots/screenshot-5.png) | ![Results](art/screenshots/screenshot-6.png) | ![News](art/screenshots/screenshot-7.png) | ![Info](art/screenshots/screenshot-8.png) |
+| ![Fixtures](screenshot/five.png) | ![Results](screenshot/six.png) | ![News](screenshots/seven.png) | ![Info](screenshots/eight.png) |
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.ricknout.rugbyranker" target="_blank">
