@@ -9,7 +9,7 @@ It displays the latest international rankings, live scores, fixtures, results an
 
 <br>
 
-| Rankings | Drawer | Predict | Predictions |
+| HOME | Player | Search | Predictions |
 | ------ | ----- | ------ | ----- |
 | ![Rankings](screenshot/one.png) | ![Predict](screenshot/two.png) | ![Predictions](screenshot/three.png) | ![Live](screenshot/four.png) |
 
