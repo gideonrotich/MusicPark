@@ -85,7 +85,7 @@ object AppModule {
     @Singleton
     fun providesPostsRepository(
         napsterApi: NapsterApi
-    ):getPosts{
+    ): getPosts {
         return PostRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -95,7 +95,7 @@ object AppModule {
     @Singleton
     fun providesArtistRepository(
         napsterApi: NapsterApi
-    ):ArtistRepository{
+    ): ArtistRepository {
         return ArtistRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -105,7 +105,7 @@ object AppModule {
     @Singleton
     fun providesPlaylistRepository(
         napsterApi: NapsterApi
-    ):PlaylistRepository{
+    ): PlaylistRepository {
         return PlaylistRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -115,7 +115,7 @@ object AppModule {
     @Singleton
     fun providesTopRepository(
         napsterApi: NapsterApi
-    ):TopRepository{
+    ): TopRepository {
         return TopRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -125,7 +125,7 @@ object AppModule {
     @Singleton
     fun providesALbumRepository(
         napsterApi: NapsterApi
-    ):AlbumRepository{
+    ): AlbumRepository {
         return AlbumRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -136,7 +136,7 @@ object AppModule {
     @Singleton
     fun providesArtistDetailsRepository(
         napsterApi: NapsterApi
-    ):ArtistDetailsRepository{
+    ): ArtistDetailsRepository {
         return ArtistDetailsRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -146,7 +146,7 @@ object AppModule {
     @Singleton
     fun providesAlbumDetailsRepository(
         napsterApi: NapsterApi
-    ):AlbumDetailRepository{
+    ): AlbumDetailRepository {
         return AlbumDetailRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -156,7 +156,7 @@ object AppModule {
     @Singleton
     fun providesMusicRepository(
         napsterApi: NapsterApi
-    ):MusicRepository{
+    ): MusicRepository {
         return MusicRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -166,7 +166,7 @@ object AppModule {
     @Singleton
     fun providesSimilarRepository(
         napsterApi: NapsterApi
-    ):SimilarRepository{
+    ): SimilarRepository {
         return SimilarRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -176,7 +176,7 @@ object AppModule {
     @Singleton
     fun providesArtistSearchRepository(
         napsterApi: NapsterApi
-    ):ArtistSearchRepository{
+    ): ArtistSearchRepository {
         return ArtistSearchRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -186,7 +186,7 @@ object AppModule {
     @Singleton
     fun providesSOngRepository(
         napsterApi: NapsterApi
-    ):SongRepository{
+    ): SongRepository {
         return SongRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -196,7 +196,7 @@ object AppModule {
     @Singleton
     fun providesGenreRepository(
         napsterApi: NapsterApi
-    ):GenreRepository{
+    ): GenreRepository {
         return GenreRepositoryImpl(
             napsterApi = napsterApi
         )
@@ -229,7 +229,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideGetArtistSearchUseCase(
-       artistSearchRepository: ArtistSearchRepository
+        artistSearchRepository: ArtistSearchRepository
     ): GetArtistSearchUseCase {
         return GetArtistSearchUseCase(artistSearchRepository)
     }
@@ -302,7 +302,7 @@ object AppModule {
     @Provides
     fun providesGetPostsUseCase(
         getPosts: getPosts
-    ):GetPostsUseCase{
+    ): GetPostsUseCase {
         return GetPostsUseCase(getPosts)
     }
 
@@ -310,7 +310,7 @@ object AppModule {
     @Provides
     fun providesGetArtistUseCase(
         artistRepository: ArtistRepository
-    ):GetArtistUseCase{
+    ): GetArtistUseCase {
         return GetArtistUseCase(artistRepository)
     }
 
