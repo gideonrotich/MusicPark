@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MusicPark</string>
+    <string name="artist_description">popular artist images</string>
 </resources>
