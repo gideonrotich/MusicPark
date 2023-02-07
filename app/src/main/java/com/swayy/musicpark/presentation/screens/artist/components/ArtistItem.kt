@@ -14,13 +14,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.swayy.musicpark.R
 import com.swayy.musicpark.domain.models.Artist
 import com.swayy.musicpark.domain.models.Post
@@ -43,10 +46,15 @@ fun ArtistItem(
             ) {
                 Box {
                     AsyncImage(
-                        model = "https://api.napster.com/imageserver/v2/artists/${artist.id}/images/500x500.jpg",
-                        contentDescription = "",
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data("https://api.napster.com/imageserver/v2/artists/${artist.id}/images/500x500.jpg")
+                            .crossfade(true)
+                            .error(R.drawable.error404)
+                            .build(),
+                        contentDescription = stringResource(R.string.artist_description),
                         contentScale = ContentScale.Crop
                     )
+
                     Row(
                         modifier = Modifier
                             .align(Alignment.BottomStart)
